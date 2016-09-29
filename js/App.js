@@ -87,7 +87,6 @@ App.prototype.respClear = function () {
 };
 
 App.prototype.respAdd = function () {
-	console.log(JSON.stringify(this.dataForServer));
 	this.XMLLoad('POST', '/add', this.addDatafromDatabase.bind(this), JSON.stringify(this.dataForServer));
 };
 
