@@ -18,11 +18,11 @@ Resp.prototype = {
 		var target = e.target;
 
 		if (target === this.addBtn) {
-			console.log('add', this.data);
+			this.emit('resp-add');
 		}
 
 		if (target === this.removeBtn) {
-			console.log('remove', this.data);
+			this.emit('resp-del');
 		}
 
 		if (target === this.clearBtn) {

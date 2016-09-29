@@ -16,6 +16,8 @@ App.prototype.init = function () {
 	this.cities.on('city-enter', this.citiesEnter.bind(this));
 	this.cities.on('city-create', this.citiesCreate.bind(this));
 	this.resp.on('resp-clear', this.respClear.bind(this));
+	this.resp.on('resp-add', this.respAdd.bind(this));
+	this.resp.on('resp-del', this.respDel.bind(this));
 	this.XMLLoad('GET', this.url, this.addDatafromDatabase.bind(this));
 };
 
@@ -84,6 +86,24 @@ App.prototype.respClear = function () {
 	this.sendToResp();
 };
 
+App.prototype.respAdd = function () {
+	console.log(JSON.stringify(this.dataForServer));
+	this.XMLLoad('POST', '/add', this.addDatafromDatabase.bind(this), JSON.stringify(this.dataForServer));
+};
+
+App.prototype.respDel = function () {
+	this.XMLLoad('POST', '/del', this.addDatafromDatabase.bind(this), JSON.stringify(this.dataForServer));
+};
+
 window.addEventListener('DOMContentLoaded', function(){
 	new App();
 });
+
+
+
+
+// var json_upload = "json_name=" + JSON.stringify({name:"John Rambo", time:"2pm"});
+// var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+// xmlhttp.open("POST", "/file.php");
+// xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+// xmlhttp.send(json_upload);
