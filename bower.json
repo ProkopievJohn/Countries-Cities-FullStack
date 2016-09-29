@@ -1,0 +1,20 @@
+{
+  "name": "test-express",
+  "description": "app for express app",
+  "main": "",
+  "authors": [
+    "Ivan Prokopiev <ProkopievJohn@gmal.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
