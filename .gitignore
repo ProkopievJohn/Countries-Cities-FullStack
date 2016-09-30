@@ -1,3 +1,4 @@
-/node_modules
-/bower_components
-/public/libs
+/server/node_modules
+/clien/node_modules
+/client/bower_components
+/client/public/libs
