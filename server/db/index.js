@@ -4,65 +4,31 @@ var MongoClient = require('mongodb').MongoClient,
 
 var mongo = mongoose.connect('mongodb://localhost:27017/countries-cities-server');
 
-mongo.on("error", console.error.bind(console, "connection error:"));
-mongo.once("open", function callback () {
-    console.log("Connected to server!")
-	mongoose.connection.db['countries-cities-server'](function (err, names) {
-		console.log(names);
-		module.exports.Collection = names;
-	});
-});
-
 var dataSchema = new mongoose.Schema({
 	id: String,
 	cities: Array
 });
 
-var Country = mongo.model('Country', dataSchema, { collection: 'countries-cities-server' });
-
-
-var mongoose = require('mongoose');
-
-if (mongoose.connection.readyState = 0 ) {
-mongoose.connect("mongodb://austin:password1@paulo.mongohq.com:10023/test1");
-console.log('mongoose readyState is ' + mongoose.connection.readyState);
-}
-var collection;
-
-mongoose.connection.on('open', function (ref) {
-    console.log('Connected to mongo server.');
-});
-
-//trying to get collection names
-mongoose.connection.db.collectionNames(function (err, names) {
-    console.log(names); // [{ name: 'dbname.myCollection' }]
-    module.exports.Collection = names;
-});
-
+// var Country = mongo.model('Country', dataSchema);
+var Country = mongo.model('Country', dataSchema, 'countries-cities-server');
 
 
 var db = {};
 
 db.get = function (collect, item, callback) {
-	Country.find(item, callback);
-	MongoClient.connect('mongodb://localhost:27017/countries-cities-server', function(err, db) {
-		assert.equal(null, err);
-		var collection = db.collection(collect);
-		collection.find(item || null).toArray(function(err, items) {
-			callback(items);
-		});
+	Country.find(item, function(err, data) {
+		if (err) return handleError(err);
+		callback(data);
 	});
 };
 
 db.add = function (collect, item, callback) {
-	MongoClient.connect('mongodb://localhost:27017/countries-cities-server', function(err, db) {
-		assert.equal(null, err);
-		var collection = db.collection(collect);
-		collection.insert(item, function (err, data) {
-			collection.find().toArray(function(err, items) {
-				callback(items);
-			});
-		});
+	Country.create(item, function (err, data) {
+		if (err) return handleError(err);
+		Country.find({}, function(err, data) {
+			if (err) return handleError(err);
+			callback(data);
+		})
 	});
 };
 
