@@ -19,7 +19,7 @@ Countries.prototype = {
 
 		if (target.tagName === 'LI') {
 			this.enterCountry(target);
-			this.emit('country-enter', target);
+			this.emit('country-create', target.innerHTML);
 		}
 
 		if (target === this.elBtn) {
@@ -101,7 +101,7 @@ Countries.prototype = {
 		}
 		this.unSelected();
 		el.classList.add('selected');
-		this.emit('country-enter', el);
+		this.emit('country-create', el.innerHTML);
 	},
 
 	getByHtml: function (text) {

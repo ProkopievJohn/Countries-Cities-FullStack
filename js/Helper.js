@@ -1,7 +1,7 @@
 function Helper() {}
 
 
-Helper.prototype.XMLLoad = function (method, url, callback, data) {
+Helper.prototype.XMLLoad = function (method, url, callback, data, typeHeader) {
 	'use strict';
 	var xml = new XMLHttpRequest();
 	xml.addEventListener('readystatechange', function () {
@@ -11,11 +11,7 @@ Helper.prototype.XMLLoad = function (method, url, callback, data) {
 	});
 	xml.open(method, url, true);
 
-	// xhr.setRequestHeader('Content-type', typeHeader || );
-	
-	if (data) {
-		xml.send(data);
-	} else {
-		xml.send();
-	}
+	xml.setRequestHeader('Content-type', typeHeader || 'application/x-www-form-urlencoded');
+
+	xml.send(data || null);
 };

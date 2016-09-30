@@ -11,7 +11,6 @@ App.prototype = Object.create(Helper.prototype);
 
 App.prototype.init = function () {
 	this.countries.on('choose-countries', this.chooseCountries.bind(this));
-	this.countries.on('country-enter', this.countryEnter.bind(this));
 	this.countries.on('country-create', this.countryCreate.bind(this));
 	this.cities.on('city-enter', this.citiesEnter.bind(this));
 	this.cities.on('city-create', this.citiesCreate.bind(this));
@@ -48,19 +47,19 @@ App.prototype.chooseCountries = function (data) {
 App.prototype.countryCreate = function (text) {
 	if (typeof text !== 'string' || text === '') return;
 	var text = text[0].toUpperCase() + text.slice(1);
-	this.dataForServer['country'] = text;
+	this.dataForServer['id'] = text;
 	this.sendToResp();
-	this.cities.startChooseCities(this.dataForServer.country);
+	this.cities.startChooseCities(this.dataForServer.id);
 };
 
 App.prototype.citiesCreate = function (text) {
 	if (typeof text !== 'string' || text === '') return;
 	var text = text[0].toUpperCase() + text.slice(1);
-	if (this.dataForServer['country'] === undefined) {
+	if (this.dataForServer['id'] === undefined) {
 		this.countries.elForAdd.focus();
 		return;
 	}
-	this.dataForServer['city'] = text;
+	this.dataForServer['cities'] = text;
 	this.sendToResp();
 };
 
@@ -73,25 +72,38 @@ App.prototype.sendToResp = function () {
 	this.resp.checkBtns(respText !== '');
 };
 
-App.prototype.countryEnter = function (data) {
-	this.countryCreate(data.innerHTML);
-};
-
 App.prototype.citiesEnter = function (data) {
 	this.citiesCreate(data.innerHTML)
 };
 
 App.prototype.respClear = function () {
+	this.countries.elForAdd.value = '';
+	this.countries.findInList('');
+	this.cities.elForAdd.value = '';
+	this.cities.findInList('');
 	this.dataForServer = {};
 	this.sendToResp();
 };
 
 App.prototype.respAdd = function () {
-	this.XMLLoad('POST', '/add', this.addDatafromDatabase.bind(this), JSON.stringify(this.dataForServer));
+	this.XMLLoad('POST', '/add', this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
 };
 
 App.prototype.respDel = function () {
-	this.XMLLoad('POST', '/del', this.addDatafromDatabase.bind(this), JSON.stringify(this.dataForServer));
+	this.XMLLoad('POST', '/del', this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
+};
+
+App.prototype.apdateAllLists = function (data) {
+	this.countries.elForAdd.value = '';
+	this.countries.findInList('');
+	this.cities.elForAdd.value = '';
+	this.cities.findInList('');
+	var data = JSON.parse(data);
+	this.countries.clearAllList();
+	this.cities.clearAllList();
+	for (var i = 0; i < data.length; i++) {
+		this.dataAddDo(data[i]);
+	}
 };
 
 window.addEventListener('DOMContentLoaded', function(){
