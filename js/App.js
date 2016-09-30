@@ -66,7 +66,8 @@ App.prototype.citiesCreate = function (text) {
 App.prototype.sendToResp = function () {
 	var respText = '';
 	for (var i in this.dataForServer) {
-		respText += i + ': ' + this.dataForServer[i] + '; '
+		var j = i === 'id' ? 'country' : i;
+		respText += j + ': ' + this.dataForServer[i] + '; '
 	}
 	this.resp.showData(respText);
 	this.resp.checkBtns(respText !== '');
@@ -80,6 +81,7 @@ App.prototype.respClear = function () {
 	this.countries.elForAdd.value = '';
 	this.countries.findInList('');
 	this.cities.elForAdd.value = '';
+	this.cities.setAllShow();
 	this.cities.findInList('');
 	this.dataForServer = {};
 	this.sendToResp();

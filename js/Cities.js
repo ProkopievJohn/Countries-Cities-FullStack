@@ -68,6 +68,13 @@ Cities.prototype = {
 		}
 	},
 
+	setAllShow: function () {
+		var els = this.elToAdd.children;
+		for (var i = 0; i < els.length; i++) {
+			els[i].setAttribute('show', '');
+		}
+	},
+
 	chooseInList: function (arr) {
 		this.elBtn.setAttribute('disabled', 'disabled');
 		this.hideAll();

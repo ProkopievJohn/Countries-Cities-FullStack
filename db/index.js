@@ -64,7 +64,6 @@ db.remove = function (collect, id, callback) {
 		var collection = db.collection(collect);
 		collection.deleteOne(
 			id,
-			// { $addToSet:  { cities: { $each: data } } },
 			function (err, data) {
 				collection.find().toArray(function(err, items) {
 					callback(items);

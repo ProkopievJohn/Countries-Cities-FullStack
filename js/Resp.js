@@ -32,7 +32,7 @@ Resp.prototype = {
 
 	showData: function (text) {
 		if (text === '') {
-			text = 'id: ; city: ;';
+			text = 'country: ; city: ;';
 		}
 		this.elToResp.innerHTML = text;
 	},

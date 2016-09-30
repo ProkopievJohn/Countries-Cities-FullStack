@@ -4,6 +4,10 @@ var express = require('express'),
 var router = express.Router();
 
 router.post('/', function(req, res){
+	if (typeof req.body.id !== 'string') {
+		res.send('error');
+		return;
+	};
 
 	var id = {id: req.body.id};
 	db.get('countries-cities-server', id, function (data) {
@@ -11,7 +15,7 @@ router.post('/', function(req, res){
 	});
 
 	function addNewCountry(data) {
-		if (req.body.cities) {req.body.cities = [req.body.cities]}
+		if (typeof req.body.cities === 'string') {req.body.cities = [req.body.cities]}
 		db.add('countries-cities-server', req.body, function (data) {
 			res.send(data)
 		});
