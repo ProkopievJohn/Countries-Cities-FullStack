@@ -10,19 +10,20 @@ router.post('/', function(req, res){
 	};
 
 	var id = {id: req.body.id};
-	db.get('countries-cities-server', id, function (data) {
-		data.length === 0 ? addNewCountry(data) : updateCities(req.body);
+
+	db.get(id, function (data) {
+		!data ? addNewCountry(data) : updateCities(req.body);
 	});
 
 	function addNewCountry(data) {
 		if (typeof req.body.cities === 'string') {req.body.cities = [req.body.cities]}
-		db.add('countries-cities-server', req.body, function (data) {
+		db.add(req.body, function (data) {
 			res.send(data)
 		});
 	}
 
 	function updateCities(data) {
-		db.update('countries-cities-server', id, [data.cities], function (data) {
+		db.update(id, [data.cities], function (data) {
 			res.send(data)
 		});
 	}

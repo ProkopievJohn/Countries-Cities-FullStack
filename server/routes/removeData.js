@@ -4,19 +4,20 @@ var express = require('express'),
 var router = express.Router();
 
 router.post('/', function(req, res){
+
 	var id = {id: req.body.id};
-	db.get('countries-cities-server', id, function (data) {
-		data.length === 0 ? res.send('data not found') : !req.body.cities ? removeCountry() : removeCity(data);
+	db.get(id, function (data) {
+		!data ? res.send('data not found') : !req.body.cities ? removeCountry(data) : removeCity(data);
 	});
 
-	function removeCountry() {
-		db.remove('countries-cities-server', id, function (data) {
+	function removeCountry(data) {
+		db.removeCountryy(data, function (data) {
 			res.send(data);
 		});
 	}
 
 	function removeCity(data) {
-		db.removeCity('countries-cities-server', id, [req.body.cities], function (data) {
+		db.removeCity(id, [req.body.cities], function (data) {
 			res.send(data);
 		});
 	}

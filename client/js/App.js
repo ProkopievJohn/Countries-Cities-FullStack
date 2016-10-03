@@ -74,6 +74,8 @@ App.prototype.sendToResp = function () {
 };
 
 App.prototype.citiesEnter = function (data) {
+	this.countries.findInList(data.getAttribute('country-name'));
+	this.countryCreate(data.getAttribute('country-name'));
 	this.citiesCreate(data.innerHTML)
 };
 

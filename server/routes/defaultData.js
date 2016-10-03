@@ -4,7 +4,7 @@ var express = require('express'),
 var router = express.Router();
 
 router.get('/', function(req, res){
-  db.default('countries-cities-server', function (data) {
+  db.default(function (data) {
   	res.send(data);
   });
 });
