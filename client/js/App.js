@@ -1,5 +1,5 @@
 function App() {
-	this.url = 'data';
+	this.url = '/countries';
 	this.countries = new Countries(document.querySelector('#countries'));
 	this.cities = new Cities(document.querySelector('#cities'));
 	this.resp = new Resp(document.querySelector('#response'));
@@ -90,11 +90,11 @@ App.prototype.respClear = function () {
 };
 
 App.prototype.respAdd = function () {
-	this.XMLLoad('POST', '/add', this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
+	this.XMLLoad('POST', this.url, this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
 };
 
 App.prototype.respDel = function () {
-	this.XMLLoad('DELETE', '/del', this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
+	this.XMLLoad('DELETE', this.url, this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
 };
 
 App.prototype.apdateAllLists = function (data) {

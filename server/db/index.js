@@ -17,7 +17,7 @@ db.get = function (id, callback) {
 db.getAll = function (callback) {
 	Country.find({}, function (err, data) {
 		assert.equal(null, err);
-		callback(data)
+		callback(data);
 	});
 };
 
