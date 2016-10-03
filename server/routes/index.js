@@ -17,7 +17,7 @@ router.route('/countries')
 		var id = { id: req.body.id };
 
 		db.get(id, function (data) {
-			!data ? addNewCountry(data) : updateCities(req.body);
+			!data ? addNewCountry(data) : res.send('please update');
 		});
 		function addNewCountry(data) {
 			if (typeof req.body.cities === 'string') {req.body.cities = [req.body.cities]}
@@ -25,16 +25,17 @@ router.route('/countries')
 				res.send(data)
 			});
 		}
-		function updateCities(data) {
-			if (!data.cities) {
-				db.getAll(function (data) {
-					res.send(data);
-				});
-			} else {
-				db.update(id, [data.cities], function (data) {
-					res.send(data)
-				});
-			}
+	})
+	.put(function (req, res) {
+		if (!req.body.cities) {
+			db.getAll(function (data) {
+				res.send(data);
+			});
+		} else {
+			var id = { id: req.body.id };
+			db.update(id, [req.body.cities], function (data) {
+				res.send(data);
+			});
 		}
 	})
 	.delete(function (req, res) {

@@ -1,6 +1,5 @@
-function Countries(el) {
-	if (!el) return;
-	this.el = el;
+function Countries() {
+	this.el = document.querySelector('#countries');
 	this.elToAdd = this.el.querySelector('#countries-list');
 	this.elForAdd = this.el.querySelector('#country-input');
 	this.elBtn = this.el.querySelector('#country-btn');
@@ -18,12 +17,11 @@ Countries.prototype = {
 		var target = e.target;
 
 		if (target.tagName === 'LI') {
-			this.enterCountry(target);
-			this.emit('country-create', target.innerHTML);
+			this.selectCountry(target);
 		}
 
 		if (target === this.elBtn) {
-			this.createCountry();
+			this.selectCountry();
 		}
 	},
 
@@ -33,19 +31,41 @@ Countries.prototype = {
 		this.findInList(this.elForAdd.value);
 		if (e.keyCode === 13) {
 			var el = this.elToAdd.querySelector('.show-list');
-			this.enterCountry(el);
+			this.selectCountry(el);
+		}
+	},
+
+	selectCountry: function (elOrText) {
+		var countryName = !elOrText ? this.elForAdd.value : elOrText.innerHTML;
+		this.removeAllSelect();
+		if (!!elOrText) elOrText.classList.add('selected');
+		this.emit('country-select', countryName);
+	},
+
+	removeAllSelect: function () {
+		var els = this.elToAdd.children;
+		for (var i = 0; i < els.length; i++) {
+			els[i].classList.remove('selected');
 		}
 	},
 
 	addCountry: function (text) {
 		if (typeof text !== 'string' || text === '') return;
-		this.elToAdd.insertAdjacentHTML('beforeend', '<li>' + text + '</li>');
+		this.elToAdd.insertAdjacentHTML('beforeend', '<li show>' + text + '</li>');
 	},
 
-	clearAllList: function () {
-		while (this.elToAdd.firstChild) {
-			this.elToAdd.removeChild(this.elToAdd.firstChild);
+	findInList: function (text) {
+		this.activeDeactiveBtn(text !== '');
+		var els = this.elToAdd.children;
+		this.hideAll();
+		for (var i = 0; i < els.length; i++) {
+			if (els[i].innerHTML.toLowerCase().indexOf(text.toLowerCase()) !== -1) {
+				els[i].classList.remove('hide');
+				els[i].classList.add('show-list');
+			}
 		}
+		var allShow = this.elToAdd.querySelectorAll('.show-list');
+		this.emit('list-select-countries', allShow);
 	},
 
 	hideAll: function () {
@@ -56,67 +76,40 @@ Countries.prototype = {
 		}
 	},
 
-	unSelected: function () {
-		var els = this.elToAdd.children;
-		for (var i = 0; i < els.length; i++) {
-			els[i].classList.remove('selected');
+	activeDeactiveBtn: function (trueOrFalse) {
+		trueOrFalse ? this.elBtn.removeAttribute('disabled') : this.elBtn.setAttribute('disabled', 'disabled');
+	},
+
+	clearAllList: function () {
+		while (this.elToAdd.firstChild) {
+			this.elToAdd.removeChild(this.elToAdd.firstChild);
 		}
 	},
+	
+	// chooseInList: function (arr) {
+	// 	this.hideAll();
+	// 	function helper(arr) {
+	// 		return function (el, i, array) {
+	// 			for (var i = 0; i < arr.length; i++) {
+	// 				if (el === arr[i].innerHTML) {
+	// 					arr[i].classList.remove('hide');
+	// 					arr[i].classList.add('show-list');
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	var els = this.elToAdd.children;
+	// 	arr.forEach(helper(els));
+	// },
 
-	findInList: function (text) {
-		!this.elForAdd.value ? this.elBtn.setAttribute('disabled', 'disabled') : this.elBtn.removeAttribute('disabled');
-
-		var els = this.elToAdd.children;
-		this.hideAll();
-		for (var i = 0; i < els.length; i++) {
-			if (els[i].innerHTML.toLowerCase().indexOf(text.toLowerCase()) !== -1) {
-				els[i].classList.remove('hide');
-				els[i].classList.add('show-list');
-			}
-		}
-		var allShow = this.elToAdd.querySelectorAll('.show-list');
-		this.emit('choose-countries', allShow);
-	},
-
-	chooseInList: function (arr) {
-		this.hideAll();
-		function helper(arr) {
-			return function (el, i, array) {
-				for (var i = 0; i < arr.length; i++) {
-					if (el === arr[i].innerHTML) {
-						arr[i].classList.remove('hide');
-						arr[i].classList.add('show-list');
-					}
-				}
-			}
-		}
-		var els = this.elToAdd.children;
-		arr.forEach(helper(els));
-	},
-
-	enterCountry: function (el) {
-		if (!el) {
-			this.createCountry();
-			return;
-		}
-		this.unSelected();
-		el.classList.add('selected');
-		this.emit('country-create', el.innerHTML);
-	},
-
-	getByHtml: function (text) {
-		var els = this.elToAdd.children;
-		for (var i = 0; i < els.length; i++) {
-			if (els[i].innerHTML.toLowerCase() === text.toLowerCase()) {
-				return els[i];
-			}
-		}
-	},
-
-	createCountry: function () {
-		if (this.elForAdd.value === '') return;
-		this.emit('country-create', this.elForAdd.value);
-	},
+	// getByHtml: function (text) {
+	// 	var els = this.elToAdd.children;
+	// 	for (var i = 0; i < els.length; i++) {
+	// 		if (els[i].innerHTML.toLowerCase() === text.toLowerCase()) {
+	// 			return els[i];
+	// 		}
+	// 	}
+	// },
 
 	emit: function (event, parameters) {
 		this.events.emit(event, parameters);
