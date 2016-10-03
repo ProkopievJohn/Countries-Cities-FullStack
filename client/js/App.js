@@ -94,7 +94,7 @@ App.prototype.respAdd = function () {
 };
 
 App.prototype.respDel = function () {
-	this.XMLLoad('POST', '/del', this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
+	this.XMLLoad('DELETE', '/del', this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
 };
 
 App.prototype.apdateAllLists = function (data) {

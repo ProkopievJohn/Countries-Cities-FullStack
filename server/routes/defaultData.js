@@ -3,7 +3,7 @@ var express = require('express'),
 
 var router = express.Router();
 
-router.get('/', function(req, res){
+router.put('/', function(req, res){
   db.default(function (data) {
   	res.send(data);
   });
