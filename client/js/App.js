@@ -1,7 +1,7 @@
 function App() {
 	this.url = '/countries';
-	this.countries = new Countries();
-	this.cities = new Cities();
+	this.countries = new Countries(document.querySelector('#countries'));
+	this.cities = new Cities(document.querySelector('#cities'));
 	this.resp = new Resp(document.querySelector('#response'));
 	this.login = new Login(document.querySelector('#login-signup'));
 	this.dataForServer = {};
@@ -23,17 +23,16 @@ App.prototype.init = function () {
 	this.login.on('signup', this.signupSend.bind(this));
 	this.XMLLoad('GET', this.url, this.addDatafromDatabase.bind(this));
 	sessionStorage.setItem('token', '');
-
 };
 
 App.prototype.addDatafromDatabase = function (data) {
 	var data = JSON.parse(data);
 	for (var i = 0; i < data.length; i++) {
-		this.helperAddDatafromDatabase(data[i]);
+		this.dataAddDo(data[i]);
 	}
 };
 
-App.prototype.helperAddDatafromDatabase = function (data) {
+App.prototype.dataAddDo = function (data) {
 	this.countries.addCountry(data.id);
 	var merged = data.cities;
 	if (!merged) return;
@@ -47,7 +46,7 @@ App.prototype.chooseCountries = function (data) {
 	for (var i = 0; i < data.length; i++) {
 		response.push(data[i].innerHTML)
 	}
-	this.cities.chooseInListShow(response);
+	this.cities.chooseInList(response);
 };
 
 App.prototype.countryCreate = function (text) {

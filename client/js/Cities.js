@@ -1,5 +1,6 @@
-function Cities() {
-	this.el = document.querySelector('#cities');
+function Cities(el) {
+	if (!el) return;
+	this.el = el;
 	this.elToAdd = this.el.querySelector('#cities-list');
 	this.elForAdd = this.el.querySelector('#city-input');
 	this.elBtn = this.el.querySelector('#city-btn');
@@ -17,11 +18,11 @@ Cities.prototype = {
 		var target = e.target;
 
 		if (target.tagName === 'LI') {
-			this.selectCity(target);
+			this.enterCity(target);
 		}
 
 		if (target === this.elBtn) {
-			this.selectCity();
+			this.createCity();
 		}
 	},
 
@@ -31,25 +32,12 @@ Cities.prototype = {
 		this.findInList(this.elForAdd.value);
 		if (e.keyCode === 13) {
 			var el = this.elToAdd.querySelector('.show-list');
-			this.selectCity(el);
-		}
-	},
-
-	selectCity: function (elOrText) {
-		var cityName = !elOrText ? this.elForAdd.value : elOrText.innerHTML;
-		this.removeAllSelect();
-		if (!!elOrText) elOrText.classList.add('selected');
-		this.emit('city-select', cityName);
-	},
-
-	removeAllSelect: function () {
-		var els = this.elToAdd.children;
-		for (var i = 0; i < els.length; i++) {
-			els[i].classList.remove('selected');
+			this.enterCity(el);
 		}
 	},
 
 	addCity: function (text, id) {
+		if ((typeof text !== 'string' || text === '') && (typeof id !== 'string' || id === '')) return;
 		this.elToAdd.insertAdjacentHTML('beforeend', '<li show country-name="' + id + '">' + text + '</li>');
 	},
 
@@ -68,7 +56,8 @@ Cities.prototype = {
 	},
 
 	findInList: function (text) {
-		this.activeDeactiveBtn(text !== '');
+		!this.elForAdd.value ? this.elBtn.setAttribute('disabled', 'disabled') : this.elBtn.removeAttribute('disabled');
+		
 		var els = this.getByAttribute('show');
 		this.hideAll();
 		for (var i = 0; i < els.length; i++) {
@@ -77,12 +66,6 @@ Cities.prototype = {
 				els[i].classList.add('show-list');
 			}
 		}
-		var allShow = this.elToAdd.querySelectorAll('.show-list');
-		this.emit('list-select-cities', allShow);
-	},
-
-	activeDeactiveBtn: function (trueOrFalse) {
-		trueOrFalse ? this.elBtn.removeAttribute('disabled') : this.elBtn.setAttribute('disabled', 'disabled');
 	},
 
 	setAllShow: function () {
@@ -92,7 +75,8 @@ Cities.prototype = {
 		}
 	},
 
-	chooseInListShow: function (arr) {
+	chooseInList: function (arr) {
+		this.elBtn.setAttribute('disabled', 'disabled');
 		this.hideAll();
 		function helper(arr) {
 			return function (el, i, array) {
@@ -109,6 +93,7 @@ Cities.prototype = {
 		}
 		var els = this.elToAdd.children;
 		arr.forEach(helper(els));
+		this.elForAdd.setAttribute('disabled', 'disabled')
 	},
 
 	getByAttribute: function (attrName) {

@@ -109,6 +109,7 @@ router.route('/countries')
 			});
 		} else {
 			var id = { id: req.body.id };
+			
 			db.update(id, [req.body.cities], function (data) {
 				res.send(data)
 			});
