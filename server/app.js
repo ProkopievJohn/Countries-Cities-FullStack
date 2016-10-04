@@ -5,10 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes');
-
 var app = express();
+
+var secret = 'secretword';
 var jwt = require('jsonwebtoken');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -21,10 +22,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client', 'public')));
 
+/*================================= token check ================================*/
+app.use(function(req, res, next) {
+	if ( req.path === '/default' || req.path === '/' || req.path === '/signup' || req.path === '/login' || ( req.path === '/countries' && req.method === 'GET' )) { next(); return; };
+	var token = req.body.token || req.query.token || req.headers['authorization'];
+	if (token) {
+		jwt.verify(token, secret, function(err, decoded) {
+			if (err) {
+				return res.json({ success: false, message: 'Failed to authenticate token.' });
+			} else {
+				req.decoded = decoded;
+				next();
+			}
+		});
+	} else {
+		return res.status(403).json({ success: false, message: 'No token provided.' });
+	}
+});
 
-app.use('/', routes);
-
-
+app.use('/', require('./routes'));
 
 // error handlers
 

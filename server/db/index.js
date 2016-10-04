@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
 	assert = require('assert'),
-	Country = require('./Country.modal');
+	Country = require('./Country.model');
 
 mongoose.connect('mongodb://localhost:27017/countries-cities-server');
 
