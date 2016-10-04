@@ -3,6 +3,7 @@ function App() {
 	this.countries = new Countries(document.querySelector('#countries'));
 	this.cities = new Cities(document.querySelector('#cities'));
 	this.resp = new Resp(document.querySelector('#response'));
+	this.login = new Login(document.querySelector('#login-signup'));
 	this.dataForServer = {};
 	this.init();
 }
@@ -16,8 +17,12 @@ App.prototype.init = function () {
 	this.cities.on('city-create', this.citiesCreate.bind(this));
 	this.resp.on('resp-clear', this.respClear.bind(this));
 	this.resp.on('resp-add', this.respAdd.bind(this));
+	this.resp.on('resp-update', this.respUpdate.bind(this));
 	this.resp.on('resp-del', this.respDel.bind(this));
+	this.login.on('login', this.loginSend.bind(this));
+	this.login.on('signup', this.signupSend.bind(this));
 	this.XMLLoad('GET', this.url, this.addDatafromDatabase.bind(this));
+	sessionStorage.setItem('token', '');
 };
 
 App.prototype.addDatafromDatabase = function (data) {
@@ -74,7 +79,6 @@ App.prototype.sendToResp = function () {
 };
 
 App.prototype.citiesEnter = function (data) {
-	this.countries.findInList(data.getAttribute('country-name'));
 	this.countryCreate(data.getAttribute('country-name'));
 	this.citiesCreate(data.innerHTML)
 };
@@ -93,6 +97,10 @@ App.prototype.respAdd = function () {
 	this.XMLLoad('POST', this.url, this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
 };
 
+App.prototype.respUpdate = function () {
+	this.XMLLoad('PUT', this.url, this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
+};
+
 App.prototype.respDel = function () {
 	this.XMLLoad('DELETE', this.url, this.apdateAllLists.bind(this), JSON.stringify(this.dataForServer), 'application/json');
 };
@@ -105,12 +113,35 @@ App.prototype.apdateAllLists = function (data) {
 	this.cities.elForAdd.value = '';
 	this.cities.findInList('');
 	var data = JSON.parse(data);
-	this.countries.clearAllList();
-	this.cities.clearAllList();
-	for (var i = 0; i < data.length; i++) {
-		this.dataAddDo(data[i]);
+	if (data.success === false) {
+		this.login.hideUser();
+	} else {
+		this.countries.clearAllList();
+		this.cities.clearAllList();
+		for (var i = 0; i < data.length; i++) {
+			this.dataAddDo(data[i]);
+		}
 	}
 };
+
+App.prototype.loginSend = function (data) {
+	this.XMLLoad('POST', '/login', this.getToken.bind(this), JSON.stringify(data), 'application/json');
+};
+
+App.prototype.signupSend = function (data) {
+	this.XMLLoad('POST', '/signup', this.getToken.bind(this), JSON.stringify(data), 'application/json');
+};
+
+App.prototype.getToken = function (data) {
+	var data = JSON.parse(data);
+	console.log(data);
+	if (data.success) {
+		this.login.showUser(data.user.name);
+		sessionStorage.setItem('token', data.token);
+	} else {
+		sessionStorage.setItem('token', '');
+	}
+}
 
 window.addEventListener('DOMContentLoaded', function(){
 	new App();

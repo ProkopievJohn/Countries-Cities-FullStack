@@ -113,8 +113,8 @@ Cities.prototype = {
 			return;
 		}
 		this.unSelected();
-		el.classList.add('selected');
 		this.emit('city-enter', el);
+		el.classList.add('selected');
 	},
 
 	unSelected: function () {

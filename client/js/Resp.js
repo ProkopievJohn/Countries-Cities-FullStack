@@ -3,6 +3,7 @@ function Resp(el) {
 	this.el = el;
 	this.elToResp = this.el.querySelector('#data-for-response');
 	this.addBtn = this.el.querySelector('#response-add-data');
+	this.updateBtn = this.el.querySelector('#response-update-data');
 	this.removeBtn = this.el.querySelector('#response-remove-data');
 	this.clearBtn = this.el.querySelector('#response-clear-data');
 	this.events = new EventEmitter();
@@ -28,6 +29,10 @@ Resp.prototype = {
 		if (target === this.clearBtn) {
 			this.emit('resp-clear');
 		}
+
+		if (target === this.updateBtn) {
+			this.emit('resp-update');
+		}
 	},
 
 	showData: function (text) {
@@ -42,10 +47,12 @@ Resp.prototype = {
 			add: function() {
 				this.addBtn.setAttribute('disabled', 'disabled');
 				this.removeBtn.setAttribute('disabled', 'disabled');
+				this.updateBtn.setAttribute('disabled', 'disabled');
 			},
 			remove: function() {
 				this.addBtn.removeAttribute('disabled');
 				this.removeBtn.removeAttribute('disabled');
+				this.updateBtn.removeAttribute('disabled');
 			}
 		}
 

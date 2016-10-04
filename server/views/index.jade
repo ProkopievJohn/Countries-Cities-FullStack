@@ -1,0 +1,74 @@
+extends layout
+
+block content
+	header.navbar.navbar-default
+		.container-fluid
+			#response.navbar-form.navbar-left
+				#response-btn.btn-group
+					button#response-add-data.btn.btn-default(type="button" disabled="disabled") add 
+						span.glyphicon.glyphicon-ok
+					button#response-update-data.btn.btn-default(type="button" disabled="disabled") update 
+						span.glyphicon.glyphicon-refresh
+					button#response-remove-data.btn.btn-default(type="button" disabled="disabled") remove 
+						span.glyphicon.glyphicon-trash
+					button#response-clear-data.btn.btn-default(type="button") clear 
+						span.glyphicon.glyphicon-remove
+				#data-for-response country: ; city: ;
+			#login-signup.navbar-form.navbar-right
+				.user.hide
+				.form-group
+					.input-group
+						input#name.form-control(type="text" placeholder="name")
+					.input-group
+						input#password.form-control(type="password" placeholder="password")
+						.input-group-btn
+							button#login.btn.btn-default(type="button") LogIn
+							button#signup.btn.btn-default(type="button") SignUp
+	section.container-fluid
+		.row
+			.navbar-collapse.collapse
+			#countries.col-sm-6
+				.form-group.col-sm-12
+					label(for="country-input") Country
+					.input-group
+						input#country-input.form-control(type="text" placeholder="select country")
+						span.input-group-btn
+							button#country-btn.btn.btn-default(type="button" disabled="disabled") Add Country
+				ul#countries-list.col-sm-12.list
+			#cities.col-sm-6
+				.form-group.col-sm-12
+					label(for="cities-input") Country
+					.input-group
+						input#city-input.form-control(type="text" placeholder="select citiy" disabled="disabled")
+						span.input-group-btn
+							button#city-btn.btn.btn-default(type="button" disabled="disabled") Add City
+				ul#cities-list.col-sm-12.list
+
+//- <div class="navbar navbar-default navbar-fixed-top">
+//-     <div class="container">
+//-         <div class="navbar-header">
+//-             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+//-                 <span class="icon-bar"></span>
+//-                 <span class="icon-bar"></span>
+//-                 <span class="icon-bar"></span>
+//-             </button>
+//-             <a class="navbar-brand" href="#">Sitename</a>
+//-         </div>
+//-         <center>
+//-             <div class="navbar-collapse collapse" id="navbar-main">
+//-                 <ul class="nav navbar-nav">
+//-                     <li class="active"><a href="#">Link</a>
+//-                 </ul>
+//-                 <form class="navbar-form navbar-right" role="search">
+//-                     <div class="form-group">
+//-                         <input type="text" class="form-control" name="username" placeholder="Username">
+//-                     </div>
+//-                     <div class="form-group">
+//-                         <input type="text" class="form-control" name="password" placeholder="Password">
+//-                     </div>
+//-                     <button type="submit" class="btn btn-default">Sign In</button>
+//-                 </form>
+//-             </div>
+//-         </center>
+//-     </div>
+//- </div>
