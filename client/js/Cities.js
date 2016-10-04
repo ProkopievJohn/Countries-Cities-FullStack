@@ -122,34 +122,34 @@ Cities.prototype = {
 		return response;
 	},
 
-	// enterCity: function (el) {
-	// 	if (!el) {
-	// 		this.createCity();
-	// 		return;
-	// 	}
-	// 	this.unSelected();
-	// 	el.classList.add('selected');
-	// 	this.emit('city-enter', el);
-	// },
+	enterCity: function (el) {
+		if (!el) {
+			this.createCity();
+			return;
+		}
+		this.unSelected();
+		this.emit('city-enter', el);
+		el.classList.add('selected');
+	},
 
-	// unSelected: function () {
-	// 	var els = this.elToAdd.children;
-	// 	for (var i = 0; i < els.length; i++) {
-	// 		els[i].classList.remove('selected');
-	// 	}
-	// },
+	unSelected: function () {
+		var els = this.elToAdd.children;
+		for (var i = 0; i < els.length; i++) {
+			els[i].classList.remove('selected');
+		}
+	},
 
-	// startChooseCities: function (countryName) {
-	// 	// this.elForAdd.value = '';
-	// 	this.chooseInList([countryName]);
-	// 	this.elForAdd.removeAttribute('disabled')
-	// 	this.elForAdd.focus();
-	// },
+	startChooseCities: function (countryName) {
+		// this.elForAdd.value = '';
+		this.chooseInList([countryName]);
+		this.elForAdd.removeAttribute('disabled')
+		this.elForAdd.focus();
+	},
 
-	// createCity: function () {
-	// 	if (this.elForAdd.value === '') return;
-	// 	this.emit('city-create', this.elForAdd.value);
-	// },
+	createCity: function () {
+		if (this.elForAdd.value === '') return;
+		this.emit('city-create', this.elForAdd.value);
+	},
 
 	emit: function (event, parameters) {
 		this.events.emit(event, parameters);

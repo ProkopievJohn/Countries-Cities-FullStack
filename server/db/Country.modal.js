@@ -1,9 +1,7 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-
-var CountrySchema = new mongoose.Schema({
+module.exports = mongoose.model('Country', new Schema({ 
 	id: String,
 	cities: Array
-});
-
-module.exports = mongoose.model('countries-cities-server', CountrySchema);
+}));

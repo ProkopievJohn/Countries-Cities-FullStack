@@ -83,7 +83,7 @@ db.default = function (callback) {
 	}
 	
 	Country.remove({}, function (err, data) {
-		assert.equal(null, err);
+		assert.equal(err);
 		Country.create(items, function (err, data) {
 			assert.equal(null, err);
 			Country.find({}, function (err, data) {

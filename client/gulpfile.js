@@ -7,6 +7,7 @@ var gulp = require('gulp'),
 			'js/App.js',
 			'js/Countries.js',
 			'js/Resp.js',
+			'js/Login.js',
 			'js/Cities.js'
 		];
 

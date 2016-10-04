@@ -11,7 +11,8 @@ Helper.prototype.XMLLoad = function (method, url, callback, data, typeHeader) {
 	});
 	xml.open(method, url, true);
 
-	xml.setRequestHeader('Content-type', typeHeader || 'application/x-www-form-urlencoded');
+	xml.setRequestHeader( 'Content-type', typeHeader || 'application/x-www-form-urlencoded' );
+	xml.setRequestHeader( 'Authorization', sessionStorage.getItem('token') );
 
 	xml.send(data || null);
 };

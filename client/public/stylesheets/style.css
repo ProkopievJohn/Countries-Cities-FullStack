@@ -1,4 +1,8 @@
-#response {
+input {
+	border-radius: 0 !important;
+}
+
+#response, #login-signup {
 	text-align: center;
 	padding: 10px;
 }
