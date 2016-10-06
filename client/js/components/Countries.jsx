@@ -10,7 +10,6 @@ export default class Countries extends React.Component {
 	constructor(props) {
 		super(props);
 		this.events = new EventEmitter();
-		console.log('country events', this.events);
 		this.state = {
 			selected: ''
 		}

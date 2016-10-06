@@ -1,5 +1,15 @@
-var Response = React.createClass({
-	render: function () {
+import React from 'react';
+
+export default class Response extends React.Component {
+	static propTypes = {
+		name: React.PropTypes.string,
+	};
+
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
 		return (
 			<div id="response" className="navbar-form navbar-left" >
 				<div id="response-btn" className="btn-group">
@@ -18,6 +28,6 @@ var Response = React.createClass({
 				</div>
 				<div id="data-for-response">country: ; city: ;"</div>
 			</div>
-		)
+		);
 	}
-});
+}
