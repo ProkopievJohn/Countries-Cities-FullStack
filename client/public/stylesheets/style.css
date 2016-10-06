@@ -53,3 +53,8 @@ input {
 .selected {
 	background-color: #00FFFF !important;
 }
+
+#logout {
+	padding: 5px 10px;
+	float: right;
+}
