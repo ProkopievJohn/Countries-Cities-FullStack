@@ -1,13 +1,9 @@
 import React from 'react'
-import {EventEmitter} from 'events'
-import {render} from 'react-dom'
-import Header from './components/Header.jsx'
-import Countries from './components/Countries.jsx'
-import Cities from './components/Cities.jsx'
+import { connect } from 'react-redux'
+import Header from './Header'
+import Countries from './Countries'
+import Cities from './Cities'
 
-import { Dispatcher } from 'flux'
-
-console.log(Dispatcher);
 
 	let countriesDefault = [
 		{
@@ -33,32 +29,9 @@ console.log(Dispatcher);
 	];
 
 class App extends React.Component {
-	constructor() {
-		super();
-		this.state = { data: [] }
-	}
-
-	loadCountriesSitiesFromServer() {
-		this.setState({ data:countriesDefault })
-	}
-
-	componentDidMount() {
-		this.loadCountriesSitiesFromServer();
-	}
-
 	render () {
-		let data = this.state.data;
-
-		let countries = [];
-		let cities = [];
-		
-		data.forEach(function (item, index) {
-			countries.push(item.id);
-			for (var i = 0; i < item.cities.length; i++) {
-				cities.push({ city: item.cities[i], id: item.id });
-			}
-		})
-
+		const countries = this.props.countries;
+		const cities = this.props.cities;
 		return (
 			<div>
 				<Header />
@@ -73,9 +46,6 @@ class App extends React.Component {
 	}
 }
 
-render(
-	<App />,
-	document.querySelector('#react-app')
-)
-
-
+export default connect(
+	(state) => { return { state: state } }
+)(App)

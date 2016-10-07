@@ -10,13 +10,13 @@ var gulp = require('gulp'),
 // Javascript
 gulp.task('bundleReact', function () {
 	return browserify({
-			entries: './js/App.jsx',
-			extensions: ['.jsx'],
+			entries: './js/index.js',
+			extensions: ['.jsx', 'js'],
 			debug: true
 		})
 		.transform('babelify', {
 			presets: ['es2015', 'react'],
-			plugins: ['transform-class-properties']
+			plugins: ['transform-class-properties', 'transform-object-rest-spread']
 		})
 		.bundle()
 		.on('error', function(err){
@@ -50,7 +50,7 @@ gulp.task('watch', function () {
     gulp.watch([
     		'./js/**/*.jsx',
     		'./js/**/*.js',
-    		'./js/App.jsx'
+    		'./js/*.js'
     	],
     	[ 'bundleReact' ]);
 });
