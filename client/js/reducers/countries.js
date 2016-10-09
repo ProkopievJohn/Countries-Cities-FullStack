@@ -1,6 +1,6 @@
 export default function (state = [], action) {
 	switch (action.type) {
-		case 'CREATE_COUNTRIES':
+		case 'LOAD_COUNTRIES':
 			return { ...state, countries: action.countries };
 		case 'SET_COUNTRY':
 			return { ...state, countries: action.countries };

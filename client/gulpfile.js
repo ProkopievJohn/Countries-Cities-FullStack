@@ -1,7 +1,6 @@
 var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	wiredep = require('wiredep').stream,
-	react = require('gulp-react'),
 	gutil = require('gulp-util'),
 	browserify = require('browserify'),
 	babelify = require('babelify'),
@@ -25,7 +24,7 @@ gulp.task('bundleReact', function () {
 			this.emit('end');
 		})
 		.pipe(source('bundle.js'))
-		.pipe(gulp.dest('public/javascripts/'));
+		.pipe(gulp.dest('public/javascript/'));
 		// .pipe(uglify())
 });
 

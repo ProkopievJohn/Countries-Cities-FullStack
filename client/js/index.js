@@ -28,11 +28,11 @@ countriesDefault.forEach(function (item, index) {
 
 
 store.dispatch({
-	type: 'CREATE_CITIES',
+	type: 'LOAD_CITIES',
 	cities: cities
 })
 
 store.dispatch({
-	type: 'CREATE_COUNTRIES',
+	type: 'LOAD_COUNTRIES',
 	countries: countries
 })
