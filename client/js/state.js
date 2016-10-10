@@ -1,15 +1,14 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux'
-import promisesMiddlewere from './middleweres/promises'
-import * as reducers from './reducers'
+import {createStore, applyMiddleware} from 'redux';
+import logger from 'redux-logger';
+import middlewere from './middleweres/middlewere'
+import reducer from './reducers';
 
-const reduser = combineReducers(reducers);
+let createStoreWithMiddlewere = applyMiddleware(middlewere, logger())(createStore);
 
-let createStoreWithMiddlewere = applyMiddleware(promisesMiddlewere)(createStore);
-
-const store = createStoreWithMiddlewere(reduser, {
-	// user: {},
-	cities: { cities: ['no cities'] },
-	countries: { countries: ['no countries'] },
+const store = createStoreWithMiddlewere(reducer, {
+	data: [],
+	displayCountries: [],
+	displayCities: []
 })
 
 export default store;

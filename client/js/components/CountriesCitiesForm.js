@@ -26,7 +26,7 @@ class CountriesCitiesForm extends React.Component {
 	render() {
 		return (
 			<div className="form-group col-sm-12">
-				<label for={this.props.select + '-input'}>{this.props.select}</label>
+				<label htmlFor={this.props.select + '-input'}>{this.props.select}</label>
 				<div className="input-group">
 					<input
 						id={this.props.select + '-input'}

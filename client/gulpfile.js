@@ -10,7 +10,7 @@ var gulp = require('gulp'),
 gulp.task('bundleReact', function () {
 	return browserify({
 			entries: './js/index.js',
-			extensions: ['.jsx', 'js'],
+			extensions: ['.jsx', '.js'],
 			debug: true
 		})
 		.transform('babelify', {
@@ -24,7 +24,7 @@ gulp.task('bundleReact', function () {
 			this.emit('end');
 		})
 		.pipe(source('bundle.js'))
-		.pipe(gulp.dest('public/javascript/'));
+		.pipe(gulp.dest('public/javascripts/'));
 		// .pipe(uglify())
 });
 
