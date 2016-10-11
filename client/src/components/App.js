@@ -1,43 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Header from './Header';
 import Countries from './Countries';
 import Cities from './Cities';
-import { getCountriesData, listDisplayCountries } from '../actions/index';
+import * as actions from '../actions';
 
 
 class App extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			displayCities: []
-		}
-	}
-
-	componentDidMount() {
-		this.props.getCountriesData();
-	}
-
-	componentWillReceiveProps(nextProps) {
-		const countries = nextProps.countriesData.data;
-		const cities = this.showCities(countries);
-		this.props.listDisplayCountries(countries)
-
-	}
-
-	showCities(arrCountries) {
-		let response = [];
-		if (arrCountries === undefined) {return []}
-
-		arrCountries.filter((item, i) => {
-			for (var i = 0; i < item.cities.length; i++) {
-				response.push({id: item.id, city: item.cities[i]})
-			}
-		})
-
-		// return response.concat.apply([], response);
-		return response;
+	constructor(props) {
+		super(props);
+		this.props.dispatch(actions.fetchCountries())
 	}
 
 	render () {
@@ -55,10 +27,7 @@ class App extends React.Component {
 	}
 }
 
-export default connect(
-	(state) => { return { countriesData: state.countriesData } },
-	(dispatch) => { return bindActionCreators({ getCountriesData, listDisplayCountries }, dispatch) }
-)(App)
+export default connect()(App)
 
 
 // let countriesDefault = [

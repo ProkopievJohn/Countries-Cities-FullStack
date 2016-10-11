@@ -1,7 +1,7 @@
 export default (state = [], action) => {
 	switch (action.type) {
-		case 'LIST_DISPLAY_COUNTRY':
-			return { ...state, listDisplayCountries: action.data };
+		case 'FETCH_COUNTRIES':
+			return { ...state, fetchCountries: action.payload }
 		default:
 			return state
 	}

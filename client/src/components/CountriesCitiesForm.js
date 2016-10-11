@@ -19,8 +19,10 @@ class CountriesCitiesForm extends React.Component {
 		this.props.handleSearch(input);
 	}
 
-	addCountry() {
+	addNew() {
 		let input = this.refs.input.value;
+		input = input[0].toUpperCase() + input.slice(1);
+		this.props.addNew(input);
 	}
 
 	render() {
@@ -42,7 +44,7 @@ class CountriesCitiesForm extends React.Component {
 							className="btn btn-default"
 							type="button"
 							ref="btn"
-							onClick={this.addCountry.bind(this)}
+							onClick={this.addNew.bind(this)}
 							disabled={this.state.checkBtn}
 						>Add {this.props.select}</button>
 					</div>

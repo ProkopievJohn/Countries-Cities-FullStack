@@ -9,7 +9,7 @@ var gulp = require('gulp'),
 // Javascript
 gulp.task('bundleReact', function () {
 	return browserify({
-			entries: './js/index.js',
+			entries: './src/index.js',
 			extensions: ['.jsx', '.js'],
 			debug: true
 		})
@@ -47,9 +47,9 @@ gulp.task('bower', function () {
 gulp.task('watch', function () {
 	gulp.watch('./bower.json', ['bower']);
     gulp.watch([
-    		'./js/**/*.jsx',
-    		'./js/**/*.js',
-    		'./js/*.js'
+    		'./src/**/*.jsx',
+    		'./src/**/*.js',
+    		'./src/*.js'
     	],
     	[ 'bundleReact' ]);
 });

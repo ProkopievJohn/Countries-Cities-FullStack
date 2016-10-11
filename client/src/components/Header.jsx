@@ -1,11 +1,9 @@
 import React from 'react';
-import Response from './headerResponse.jsx';
+import Response from './headerResponse.js';
+import Login from './headerLogin.js';
+import { connect } from 'react-redux';
 
-export default class Header extends React.Component {
-	static propTypes = {
-		name: React.PropTypes.string,
-	};
-
+class Header extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -15,9 +13,11 @@ export default class Header extends React.Component {
 			<div className="navbar navbar-default">
 				<div className="container-fluid">
 				<Response />
-					header
+				<Login />
 				</div>
 			</div>
 		);
 	}
 }
+
+export default connect()(Header)
