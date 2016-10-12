@@ -1,6 +1,6 @@
 import React from 'react';
-import Response from './headerResponse.js';
-import Login from './headerLogin.js';
+import Response from './headerResponse';
+import Login from './headerLogin';
 import { connect } from 'react-redux';
 
 class Header extends React.Component {

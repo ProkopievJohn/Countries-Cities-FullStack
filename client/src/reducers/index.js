@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux'
-import enterCountry from './enterCountry';
-import enterCity from './enterCity';
+import showCities from './showCities';
 import showCountries from './showCountries'
 import fetchCountries from './fetchCountries'
+import selectCity from './selectCity'
+import selectCountry from './selectCountry'
+import showCountriesCities from './showCountriesCities'
 
 export default combineReducers({
 	showCountries,
 	fetchCountries,
-	enterCountry,
-	enterCity
+	showCities,
+	selectCity,
+	selectCountry,
+	showCountriesCities
 })

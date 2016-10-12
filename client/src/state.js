@@ -8,8 +8,7 @@ let createStoreWithMiddlewere = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddlewere(reducer, {
 	fetchCountries: [],
 	showCountries: [],
-	enderCountry: {},
-	enterCity: {}
+	countriesSearch: ''
 })
 
 export default store;

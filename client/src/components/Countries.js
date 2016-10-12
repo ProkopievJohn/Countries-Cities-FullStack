@@ -1,68 +1,82 @@
 import React from 'react';
-import Form from './CountriesCitiesForm.js';
+import SearchForm from './SearchForm';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class Countries extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			selected: '',
-			search: ''
+	}
+
+	selectCountry(item, boolean) {
+		const fetchCountries = this.props.fetchCountries;
+		this.props.dispatch(actions.selectCountry( boolean ? undefined : { id: item.id, old: true } ));
+		this.props.dispatch(actions.showCountries( boolean ? fetchCountries : [item] ));
+	}
+
+	newCountry(newCountry) {
+		const fetchCountries = this.props.fetchCountries;
+		let old = false;
+		
+		for (var i = fetchCountries.length - 1; i >= 0; i--) {
+			if (fetchCountries[i].id.toLowerCase() === newCountry.toLowerCase()) old = true;
 		}
+
+		this.props.dispatch(actions.selectCountry({ id: newCountry, old: old }));
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const countries = nextProps.countries;
-		this.props.dispatch(actions.showCountries(countries));
-		const countryFromCity = !nextProps.enterCity ? '' : nextProps.enterCity.id;
-		this.setState({ selected: countryFromCity, search: countryFromCity })
-		if (countryFromCity !== '') this.props.dispatch(actions.enterCountry({ id: countryFromCity, new: false }));
-	}
-
-	enterCountry(id) {
-		let name = this.state.selected === id ? '' : id;
-		this.setState({ selected: name, search: name })
-		this.props.dispatch(actions.enterCountry({ id: name, new: false }));
-	}
-
-	handleSearch(text) {
-		this.setState({ search: text })
-	}
-
-	filterCountries(countries) {
-		const showCountries = countries.filter((country) => {
-			return country.id.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+/*=============================================================*/
+	showCountriesCities(showCountries) {
+		let cities = [];
+		showCountries.forEach((item, i) => {
+			for (var i = 0; i < item.cities.length; i++) {
+				cities.push({ id: item.id, city: item.cities[i] });
+			}
 		});
+		return cities;
+	}
+
+
+	filterCountries(textForm) {
+		const text = textForm || '';
+		const fetchCountries = this.props.fetchCountries;
+		
+		const showCountries = fetchCountries.filter((item) => {
+			return item.id.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+		});
+		showCountries.checkBtn = text === '';
 		this.props.dispatch(actions.showCountries(showCountries));
-		return showCountries;
+
 	}
 
 	renderCountries(item, i) {
+		const className = this.props.selectCountry === undefined ? null : this.props.selectCountry.id;
 		return (
 			<li
 				key={ i }
-				className={ this.state.selected === item.id ? ' selected ' : ' ' }
-				onClick={ this.enterCountry.bind(this, item.id) }
+				className={ className === item.id ? ' selected ' : ' ' }
+				onClick={ this.selectCountry.bind(this, item, className === item.id) }
 			>
 				{item.id}
 			</li>
 		)
 	}
 
-	addNew(newCountry) {
-		console.log('COUNTRY', newCountry);
-		
-	}
-
 	render() {
-		const countries = this.props.countries || [{id: 'no countries', cities: ['no cities']}];
-		const filterCountries = this.filterCountries(countries);
+		const showCountries = this.props.showCountries;
+		this.props.dispatch(actions.showCountriesCities(this.showCountriesCities(showCountries)));
+		this.props.dispatch(actions.showCities(this.showCountriesCities(showCountries)));
 		return (
 			<div id="countries" className="col-sm-6" >
-				<Form select="country" handleSearch={this.handleSearch.bind(this)} addNew={this.addNew.bind(this)} />
+				<SearchForm
+					onChange={this.filterCountries.bind(this)}
+					onClick={this.newCountry.bind(this)}
+					id={'countries'}
+					textBtn={'Add Country'}
+					disabled={showCountries.checkBtn === undefined ? true : showCountries.checkBtn}
+				/>
 				<ul id="countries-list" className="col-sm-12 list">
-					{filterCountries.map(this.renderCountries.bind(this))}
+					{showCountries.map(this.renderCountries.bind(this))}
 				</ul>
 			</div>
 		);
@@ -70,5 +84,11 @@ class Countries extends React.Component {
 }
 
 export default connect(
-	(state) => { return { countries: state.fetchCountries.fetchCountries, enterCity: state.enterCity.enterCity } }
+	(state) => { return {
+						fetchCountries: state.fetchCountries.fetchCountries,
+						showCountries: state.showCountries.showCountries,
+						selectCountry: state.selectCountry.selectCountry
+					}
+				}
 )(Countries)
+

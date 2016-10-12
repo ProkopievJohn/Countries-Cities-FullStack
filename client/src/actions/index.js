@@ -24,26 +24,47 @@ const showCountries = (arrCountries) => {
 	}
 }
 
-const enterCountry = (nameCountry) => {
+const selectCountry = (nameCountry) => {
 	return (dispatch) => {
 		dispatch({
-			type: 'ENTER_COUNTRY',
+			type: 'SELECT_COUNTRY',
 			payload: nameCountry
 		})
 	}
 }
 
-
-const enterCity = (nameCity) => {
+const showCities = (arrCities) => {
 	return (dispatch) => {
 		dispatch({
-			type: 'ENTER_CITY',
+			type: 'SHOW_CITIES',
+			payload: arrCities
+		})
+	}
+}
+
+const showCountriesCities = (arrCities) => {
+	return (dispatch) => {
+		dispatch({
+			type: 'SHOW_COUNTRIES_CITIES',
+			payload: arrCities
+		})
+	}
+}
+
+const selectCity = (nameCity) => {
+	return (dispatch) => {
+		dispatch({
+			type: 'SELECT_CITY',
 			payload: nameCity
 		})
 	}
 }
 
-export { enterCity }
-export { fetchCountries }
-export { showCountries }
-export { enterCountry }
+export {
+	showCities, 
+	fetchCountries, 
+	showCountries,
+	selectCountry, 
+	showCountriesCities,
+	selectCity
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from './CountriesCitiesForm.js';
+import SearchForm from './SearchForm';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
@@ -7,66 +7,61 @@ import * as actions from '../actions';
 class Cities extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			selected: '',
-			search: ''
-		}
 	}
 
-	enterCity(item) {
-		let name = this.state.selected === item.id + item.city ? '' : item.id + item.city;
-		this.setState({ selected: name })
-		let resObj = this.state.selected === item.id + item.city ? { city: '', id: '', new: false } : { city: item.city, id: item.id, new: false };
+	selectCity(item, boolean) {
+		const showCountriesCities = this.props.showCountriesCities;
+		this.props.dispatch(actions.selectCity( boolean ? undefined : { id: item.id, city: item.city, old: true } ));
+	}
+
+	filterCities(textForm) {
+		const text = textForm || '';
+		const showCountriesCities = this.props.showCountriesCities;
 		
-		this.props.dispatch(actions.enterCity(resObj));
-	}
-
-	handleSearch(text) {
-		this.setState({ search: text })
-	}
-
-	createCitiesArr(countries) {
-		let cities = [];
-		countries.filter((item, i) => {
-			for (var i = 0; i < item.cities.length; i++) {
-				cities.push({ id: item.id, city: item.cities[i] });
-			}
+		const showCities = showCountriesCities.filter((item) => {
+			return item.city.toLowerCase().indexOf(text.toLowerCase()) !== -1;
 		});
-		return cities;
-	}
-
-	filterCities(cities) {
-		const showCities = cities.filter((city) => {
-			return city.city.toLowerCase().indexOf(this.state.search) !== -1;
-		});
-		return showCities;
+		showCities.checkBtn = text === '';
+		this.props.dispatch(actions.showCities(showCities))
 	}
 
 	renderCities(item, i) {
+		const className = this.props.selectCity === undefined ? null : this.props.selectCity.id + this.props.selectCity.city;
 		return (
 			<li
 				key={ i }
-				className={ this.state.selected === item.id + item.city ? ' selected ' : ' ' }
-				onClick={ this.enterCity.bind(this, item) }
+				className={ className === item.id + item.city ? ' selected ' : ' ' }
+				onClick={ this.selectCity.bind(this, item, className === item.id + item.city) }
 			>
 				{item.city}
 			</li>
 		)
 	}
 
-	addNew(newCity) {
-		console.log('CITY', newCity);
+	newCity(newCity) {
+		const showCountriesCities = this.props.showCountriesCities;
+		let old = false;
+
+		for (var i = showCountriesCities.length - 1; i >= 0; i--) {
+			if (showCountriesCities[i].city.toLowerCase() === newCity.toLowerCase()) old = true;
+		}
+		this.props.dispatch(actions.selectCity({ city: newCity, old: old }));
 	}
 
 	render() {
-		const countries = this.props.countries;
-		const citiesArr = this.createCitiesArr(countries);
-		const filterCities = this.filterCities(citiesArr);
+		const showCities = this.props.showCities;
+
 		return (
 			<div id="cities" className="col-sm-6" >
-				<Form select="cities" handleSearch={this.handleSearch.bind(this)} addNew={this.addNew.bind(this)} />
+				<SearchForm
+					onChange={this.filterCities.bind(this)}
+					onClick={this.newCity.bind(this)}
+					id={'cities'}
+					textBtn={'Add City'}
+					disabled={ showCities === undefined ? true : showCities.checkBtn === undefined ? true : showCities.checkBtn }
+				/>
 				<ul id="cities-list" className="col-sm-12 list">
-					{filterCities.map(this.renderCities.bind(this))}
+					{showCities.map(this.renderCities.bind(this))}
 				</ul>
 			</div>
 		);
@@ -74,5 +69,10 @@ class Cities extends React.Component {
 }
 
 export default connect(
-	(state) => { return { countries: state.showCountries.showCountries } }
+	(state) => { return {
+						showCountriesCities: state.showCountriesCities.showCountriesCities,
+						showCities: state.showCities.showCities,
+						selectCity: state.selectCity.selectCity,
+						}
+					}
 )(Cities)

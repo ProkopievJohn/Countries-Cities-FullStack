@@ -13,6 +13,8 @@ class App extends React.Component {
 	}
 
 	render () {
+		const fetchCountries = this.props.fetchCountries || [{id: 'no countries', cities: ['no cities']}];
+		this.props.dispatch(actions.showCountries(fetchCountries))
 		return (
 			<div>
 				<Header />
@@ -27,7 +29,9 @@ class App extends React.Component {
 	}
 }
 
-export default connect()(App)
+export default connect(
+	(state) => { return { fetchCountries: state.fetchCountries.fetchCountries } }
+)(App)
 
 
 // let countriesDefault = [
