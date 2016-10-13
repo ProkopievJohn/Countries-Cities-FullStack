@@ -1,20 +1,5 @@
 import axios from 'axios';
 
-const fetchCountries = () => {
-	return (dispatch) => {
-		axios.get('http://localhost:3000/countries')
-			.then((data) => {
-				dispatch({
-					type: 'FETCH_COUNTRIES',
-					payload: data.data
-				})
-			})
-			.catch(( error ) => {
-				dispatch({ type:'ERROR_FETCH_COUNTRIES', error });
-			})
-	}
-};
-
 const login = ( send ) => {
 	return (dispatch) => {
 		axios.post( 'http://localhost:3000/login', send )
@@ -50,24 +35,6 @@ const logout = ( user ) => {
 		dispatch({
 			type: 'LOGOUT',
 			payload: user
-		})
-	}
-}
-
-const showCountries = (arrCountries) => {
-	return (dispatch) => {
-		dispatch({
-			type: 'SHOW_COUNTRIES',
-			payload: arrCountries
-		})
-	}
-}
-
-const selectCountry = (nameCountry) => {
-	return (dispatch) => {
-		dispatch({
-			type: 'SELECT_COUNTRY',
-			payload: nameCountry
 		})
 	}
 }
@@ -166,14 +133,17 @@ const removeCountryOrCity = (data) => {
 	}
 }
 
+// import { fetchCountries, showCountries, selectCountry } from './countries'
+import * as countries from './countries';
+
 export {
+	countries,
+
+
 	login,
 	signup,
 	logout,
-	showCities, 
-	fetchCountries, 
-	showCountries,
-	selectCountry, 
+	showCities,
 	showCountriesCities,
 	selectCity,
 	addNewCountryOrCity,

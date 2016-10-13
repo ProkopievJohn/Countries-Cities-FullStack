@@ -9,50 +9,33 @@ import * as actions from '../actions';
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.props.dispatch(actions.fetchCountries())
+		// this.props.dispatch(actions.countries.fetch())
+	}
+
+	dispatshShowCountries() {
+		// const fetchCountries = this.props.fetchCountries || [{id: 'no countries', cities: ['no cities']}];
+		// this.props.dispatch(actions.countries.show(fetchCountries));
 	}
 
 	render () {
-		const fetchCountries = this.props.fetchCountries || [{id: 'no countries', cities: ['no cities']}];
-		this.props.dispatch(actions.showCountries(fetchCountries))
+		this.dispatshShowCountries();
 		return (
 			<div>
-				<Header />
 				<section className='container-fluid'>
-					<div className="row">
+					<div className='row'>
 						<Countries />
-						<Cities />
 					</div>
 				</section>
 			</div>
 		);
 	}
 }
+				// <Header />
+						// <Cities />
 
 export default connect(
-	(state) => { return { fetchCountries: state.fetchCountries.fetchCountries } }
+	(state) => { return {
+						// fetchCountries: state.countries.fetch,
+						}
+					}
 )(App)
-
-
-// let countriesDefault = [
-// 	{
-// 		id: 'Canada',
-// 		cities: ["Toronto", "Montreal", "Vancouver", "Lachine", "Mississauga", "Leamington", "Camrose", "Richmond"]
-// 	},
-// 	{
-// 		id: 'Denmark',
-// 		cities: ["Copenhagen", "Frederiksberg", "Bronshoj", "Albertslund", "HillerÃ¸d", "FrederiksvÃ¦rk", "Vasby"]
-// 	},
-// 	{
-// 		id: 'Iceland',
-// 		cities: ["Reykjavik", "Selfoss", "Grindavik", "KeflavÃ­k", "Dalvik", "Akureyri", "Hvammstangi", "Husavik"]
-// 	},
-// 	{
-// 		id: 'Norway',
-// 		cities: ["Jar", "Karlshus", "Moss", "Oslo", "Frogner", "Drammen", "Vestby", "Aursmoen", "Tranby", "Bergen"]
-// 	},
-// 	{
-// 		id: 'United States',
-// 		cities: ["Mukilteo", "Fairfield", "Chicago", "Hernando", "Irving", "Baltimore", "Kingston", "Burlington"]
-// 	}
-// ];
