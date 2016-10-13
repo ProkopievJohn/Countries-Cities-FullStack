@@ -25,7 +25,7 @@ class Countries extends React.Component {
 		this.props.dispatch(actions.selectCountry({ id: newCountry, old: old }));
 	}
 
-/*=============================================================*/
+
 	showCountriesCities(showCountries) {
 		let cities = [];
 		showCountries.forEach((item, i) => {

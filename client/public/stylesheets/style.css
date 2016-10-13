@@ -58,3 +58,15 @@ input {
 	padding: 5px 10px;
 	float: right;
 }
+
+.p-0 {
+	padding: 0;
+}
+
+.login-group {
+	padding-right: 20px;
+}
+
+.bd-red {
+	border-bottom: 1px solid red;
+}

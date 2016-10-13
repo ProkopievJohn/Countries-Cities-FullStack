@@ -45,7 +45,8 @@ class Cities extends React.Component {
 		for (var i = showCountriesCities.length - 1; i >= 0; i--) {
 			if (showCountriesCities[i].city.toLowerCase() === newCity.toLowerCase()) old = true;
 		}
-		this.props.dispatch(actions.selectCity({ city: newCity, old: old }));
+		console.log(old);
+		this.props.dispatch(actions.selectCity({ id: '', city: newCity, old: old }));
 	}
 
 	render() {

@@ -5,10 +5,6 @@ import thunk from 'redux-thunk';
 
 let createStoreWithMiddlewere = applyMiddleware(thunk)(createStore);
 
-const store = createStoreWithMiddlewere(reducer, {
-	fetchCountries: [],
-	showCountries: [],
-	countriesSearch: ''
-})
+const store = createStoreWithMiddlewere(reducer)
 
 export default store;

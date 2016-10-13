@@ -11,9 +11,9 @@ class Header extends React.Component {
 	render() {
 		return (
 			<div className="navbar navbar-default">
-				<div className="container-fluid">
-				<Response />
-				<Login />
+				<div className="container-fluid row">
+					<Response />
+					<Login />
 				</div>
 			</div>
 		);
