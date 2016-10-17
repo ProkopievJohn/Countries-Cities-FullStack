@@ -9,16 +9,12 @@ import * as actions from '../actions';
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		// this.props.dispatch(actions.countries.fetch())
-	}
-
-	dispatshShowCountries() {
-		// const fetchCountries = this.props.fetchCountries || [{id: 'no countries', cities: ['no cities']}];
-		// this.props.dispatch(actions.countries.show(fetchCountries));
+		this.props.dispatch(actions.countries.fetch());
 	}
 
 	render () {
-		this.dispatshShowCountries();
+		const fetchCountries = this.props.fetchCountries || [{id: 'no countries', cities: ['no cities']}];
+		this.props.dispatch(actions.countries.show(fetchCountries));
 		return (
 			<div>
 				<section className='container-fluid'>
@@ -34,8 +30,5 @@ class App extends React.Component {
 						// <Cities />
 
 export default connect(
-	(state) => { return {
-						// fetchCountries: state.countries.fetch,
-						}
-					}
+	(state) => { return { fetchCountries: state.countries.fetch, } }
 )(App)

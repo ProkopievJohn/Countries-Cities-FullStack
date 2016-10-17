@@ -4,29 +4,38 @@ import ListEl from './ListEl'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-class Countries extends React.Component {
-	constructor(props) {
-		super(props);
-		this.props.dispatch(actions.countries.fetch())
-	}
 
-	renderCountries() {
-		const showCountries = this.props.showCountries;
-			{showCountries.map((item) => {
-				return (
-						<ListEl item={item} />
-				)
-			})}
-	}
+
+class Countries extends React.Component {
+	func() {}
 
 	render() {
-					this.renderCountries;
+		const fetchCountries = this.props.fetchCountries || [{id: 'no countries', cities: ['no cities']}];
+		const showCountries = this.props.showCountries;
+		console.log(showCountries)
 		return (
 			<div id="countries" className="col-sm-6" >
 				<ul id="countries-list" className="col-sm-12 list">
+					{this.renderCountries.bind(this)}
+					<ListEl item={{id: 'id'}} onClick={this.func.bind(this)} />
 				</ul>
 			</div>
 		);
+	}
+}
+
+export default connect(
+	(state) => { return {
+						fetchCountries: state.countries.fetch,
+						showCountries: state.countries.show,
+						// selectCountry: state.selectCountry.selectCountry,
+					}
+				}
+)(Countries)
+
+
+
+
 				// <SearchForm
 					// onChange={this.filterCountries.bind(this)}
 					// onClick={this.newCountry.bind(this)}
@@ -35,8 +44,7 @@ class Countries extends React.Component {
 					// disabled={showCountries.checkBtn === undefined ? true : showCountries.checkBtn}
 				// />
 					// {showCountries.map(this.renderCountries.bind(this))}
-	}
-}
+
 	// renderCountries(item, i) {
 	// 	const className = this.props.selectCountry === undefined ? null : this.props.selectCountry.id;
 	// 	return (
@@ -96,14 +104,4 @@ class Countries extends React.Component {
 
 
 
-export default connect(
-	(state) => { return {
-						fetchCountries: state.countries.fetch,
-						showCountries: state.countries.show,
-						// fetchCountries: state.fetchCountries.fetchCountries,
-						// showCountries: state.showCountries.showCountries,
-						// selectCountry: state.selectCountry.selectCountry
-					}
-				}
-)(Countries)
 

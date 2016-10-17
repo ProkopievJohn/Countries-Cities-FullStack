@@ -1,52 +1,6 @@
 import axios from 'axios';
 
-const login = ( send ) => {
-	return (dispatch) => {
-		axios.post( 'http://localhost:3000/login', send )
-			.then(( data ) => {
-				dispatch({
-					type: data.data.success ? 'LOGIN' : 'NO_LOGIN',
-					payload: data.data
-				})
-			})
-			.catch(( error ) => {
-				dispatch({ type: 'ERROR_LOGIN', error })
-			})
-	}
-}
 
-const signup = ( send ) => {
-	return (dispatch) => {
-		axios.post( 'http://localhost:3000/signup', send )
-			.then(( data ) => {
-				dispatch({
-					type: data.data.success ? 'LOGIN' : 'NO_LOGIN',
-					payload: data.data
-				})
-			})
-			.catch(( error ) => {
-				dispatch({ type: 'ERROR_SIGNUP', error })
-			})
-	}
-}
-
-const logout = ( user ) => {
-	return (dispatch) => {
-		dispatch({
-			type: 'LOGOUT',
-			payload: user
-		})
-	}
-}
-
-const showCities = (arrCities) => {
-	return (dispatch) => {
-		dispatch({
-			type: 'SHOW_CITIES',
-			payload: arrCities
-		})
-	}
-}
 
 const showCountriesCities = (arrCities) => {
 	return (dispatch) => {
@@ -135,14 +89,14 @@ const removeCountryOrCity = (data) => {
 
 // import { fetchCountries, showCountries, selectCountry } from './countries'
 import * as countries from './countries';
+import * as cities from './cities';
+import * as user from './user';
 
 export {
 	countries,
+	cities,
+	user,
 
-
-	login,
-	signup,
-	logout,
 	showCities,
 	showCountriesCities,
 	selectCity,

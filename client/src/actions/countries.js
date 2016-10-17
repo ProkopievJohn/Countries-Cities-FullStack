@@ -2,44 +2,55 @@ import axios from 'axios';
 
 export const fetch = () => {
 	return (dispatch) => {
+		dispatch({
+			type: 'START_FETCH_COUNTRIES'
+		})
 		axios.get('http://localhost:3000/countries')
 			.then((data) => {
-				const action = {
-					type: 'FETCH_COUNTRIES',
-					payload: data.data
+				const fetchCountries = (data) => {
+					return {
+						type: 'FETCH_COUNTRIES',
+						payload: data
+					}
 				}
 				
-				dispatch(action)
+				dispatch(fetchCountries(data.data))
 			})
 			.catch(( error ) => {
-				const action = {
-					type: 'ERROR_FETCH_COUNTRIES',
-					error
+				const errorFetvhCountries = (error) => {
+					return {
+						type: 'ERROR_FETCH_COUNTRIES',
+						error
+					}
 				}
 
-				dispatch(action)
+				dispatch(errorFetvhCountries(error))
 			})
 	}
 };
 
 export const show = (arrCountries) => {
-	const action = {
-		type: 'SHOW_COUNTRIES',
-		payload: arrCountries
+	const showCountries = (data) => {
+		return {
+			type: 'SHOW_COUNTRIES',
+			payload: data
+		}
 	}
 
 	return (dispatch) => {
-		dispatch(action)
+		dispatch(showCountries(arrCountries))
 	}
 }
 
 export const select = (nameCountry) => {
-	const action = {
-		type: 'SELECT_COUNTRY',
-		payload: nameCountry
+	const selectCountry = ( data ) => {
+		return {
+			type: 'SELECT_COUNTRY',
+			payload: data,
+		}
 	}
 
 	return (dispatch) => {
-		dispatch(action)
+		dispatch(selectCountry(nameCountry))
 	}
 }

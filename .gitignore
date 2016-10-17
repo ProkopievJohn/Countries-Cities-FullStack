@@ -3,3 +3,4 @@
 /npm-debug.log
 /client/node_modules
 /client/public/libs
+.vscode/
