@@ -1,50 +1,37 @@
-import React from 'react';
+import React, { PropTypes } from 'react'
 
-class SearchForm extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-
-	handleChange() {
-		let input = this.refs.input.value;
-		this.props.onChange(input);
-	}
-
-	addNew() {
-		let input = this.refs.input.value;
-		input = input[0].toUpperCase() + input.slice(1);
-		this.props.onClick(input);
-	}
-
-	render () {
-		return (
-			<div className="form-group col-sm-12">
-				<label htmlFor={this.props.id + '-input'}>{this.props.id}</label>
-				<div className="input-group">
-					<input
-						id={this.props.id + '-input'}
-						className="form-control"
-						type="text"
-						ref="input"
-						onChange={this.handleChange.bind(this)}
-						placeholder={"select " + (this.props.id)}
-					/>
-					<div className="input-group-btn">
-						<button
-							id={this.props.id + '-btn'}
-							className="btn btn-default"
-							type="button"
-							ref="btn"
-							onClick={this.addNew.bind(this)}
-							disabled={this.props.disabled}
-						>
-							{this.props.textBtn}
-						</button>
-					</div>
-				</div>
+const SearchForm = ({ id, onChange, onClick, disabled, textBtn }) => (
+	<div className="form-group col-sm-12">
+		<label htmlFor={ id + '-input' }>{ id }</label>
+		<div className="input-group">
+			<input
+				id={ id + '-input' }
+				className="form-control"
+				type="text"
+				onChange={ onChange }
+				placeholder={ "select " + id }
+			/>
+			<div className="input-group-btn">
+				<button
+					id={ id + '-btn' }
+					className="btn btn-default"
+					type="button"
+					onClick={ onClick }
+					disabled={ disabled }
+				>
+					{ textBtn }
+				</button>
 			</div>
-		)
-	}
+		</div>
+	</div>
+)
+
+SearchForm.propTypes = {
+	id: PropTypes.string.isRequired,
+	onChange: PropTypes.func.isRequired,
+	onClick: PropTypes.func.isRequired,
+	disabled: PropTypes.bool.isRequired,
+	textBtn: PropTypes.string.isRequired,
 }
 
-export default SearchForm;
+export default SearchForm

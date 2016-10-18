@@ -5,21 +5,24 @@ import * as actions from '../actions';
 class Response extends React.Component {
 	constructor(props) {
 		super(props);
+		this.addNew = this.addNew.bind(this);
+		this.updateCities = this.updateCities.bind(this);
+		this.remove = this.remove.bind(this);
 	}
 
 	addNew(data) {
 		if (data.id === '') return;
-		this.props.dispatch(actions.addNewCountryOrCity(data));
+		this.props.dispatch( actions.api.addNewCountryOrCity( data ) );
 	}
 
-	updateCities(data) {
-		if (data.id === '' || data.cities === '') return;
-		this.props.dispatch(actions.updateCities(data));
+	updateCities( data ) {
+		if ( data.id === '' || data.cities === '' ) return;
+		this.props.dispatch( actions.api.updateCities( data ) );
 	}
 
-	remove(data) {
-		if (data.id === '') return;
-		this.props.dispatch(actions.removeCountryOrCity(data))
+	remove( data ) {
+		if ( data.id === '' ) return;
+		this.props.dispatch( actions.api.removeCountryOrCity( data ) );
 	}
 
 	render() {
@@ -30,16 +33,16 @@ class Response extends React.Component {
 		const country = this.props.country;
 		const cities = this.props.cities;
 		const user = this.props.user;
-		if (country !== undefined && user !== undefined) {
+		if (country !== undefined && user !== null) {
 			data.id = country.id;
 			data.token = user.token;
 			checkAddBtn = country.old;
 			checkRemoveBtn = !country.old;
 		}
-		if (cities !== undefined && user !== undefined) { 
+		if (cities !== undefined && user !== null) { 
 			data.cities = cities.city;
 		}
-		if (cities !== undefined && country !== undefined && user !== undefined) {
+		if (cities !== undefined && country !== undefined && user !== null) {
 			if (country.old && !cities.old) {
 				checkUppdateBtn = false;
 				checkRemoveBtn = true;
@@ -50,15 +53,15 @@ class Response extends React.Component {
 			}
 		}
 		return (
-			<div id="response" className="col-sm-7" >
+			<div id="response" className="col-sm-8" >
 				<div id="response-btn" className="btn-group">
-					<button id="response-add-data" className="btn btn-default" type="button" disabled={checkAddBtn} onClick={this.addNew.bind(this, data)} >
+					<button id="response-add-data" className="btn btn-default" type="button" disabled={checkAddBtn} onClick={ () => { this.addNew( data ) } } >
 						add new <span className="glyphicon glyphicon-ok"></span>
 					</button>
-					<button id="response-update-data" className="btn btn-default" type="button" disabled={checkUppdateBtn} onClick={this.updateCities.bind(this, data)} >
+					<button id="response-update-data" className="btn btn-default" type="button" disabled={checkUppdateBtn} onClick={ () => { this.updateCities( data ) } } >
 						update <span className="glyphicon glyphicon-refresh"></span>
 					</button>
-					<button id="response-remove-data" className="btn btn-default" type="button" disabled={checkRemoveBtn} onClick={this.remove.bind(this, data)} >
+					<button id="response-remove-data" className="btn btn-default" type="button" disabled={checkRemoveBtn} onClick={ () => { this.remove( data ) } } >
 						remove <span className="glyphicon glyphicon-trash"></span>
 					</button>
 				</div>
@@ -73,9 +76,9 @@ class Response extends React.Component {
 
 export default connect(
 	(state) => { return {
-						country: state.selectCountry.selectCountry,
-						cities: state.selectCity.selectCity,
-						user: state.login.user,
+						country: state.countries.select,
+						cities: state.cities.select,
+						user: state.user.user,
 						}
 					}
 )(Response)

@@ -1,22 +1,15 @@
 import { combineReducers } from 'redux'
-import showCities from './showCities';
-import selectCity from './selectCity'
-import selectCountry from './selectCountry'
-import showCountriesCities from './showCountriesCities'
-import login from './login'
 
-import * as countries from './countries'
+import { countries } from './countries';
+import { cities } from './cities';
+import { user } from './user';
 
-export default combineReducers(countries)
+// console.log(countries)
 
-// export default combineReducers({
-// 	countries: countries,
-// 	// countries,
-// 	login,
-// 	showCountries,
-// 	// fetchCountries,
-// 	showCities,
-// 	selectCity,
-// 	selectCountry,
-// 	showCountriesCities,
-// })
+
+// export default combineReducers(cities, countries);
+export default combineReducers({
+    countries,
+    cities,
+    user,
+});

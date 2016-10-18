@@ -1,44 +1,58 @@
 import axios from 'axios';
+import { load as loadCities } from './cities';
 
-export const fetch = () => {
-	return (dispatch) => {
+export const load = () => {
+	return ( dispatch ) => {
 		dispatch({
-			type: 'START_FETCH_COUNTRIES'
+			type: 'START_LOADED_COUNTRIES'
 		})
 		axios.get('http://localhost:3000/countries')
-			.then((data) => {
-				const fetchCountries = (data) => {
+			.then(( data ) => {
+				const loaded = ( data ) => {
 					return {
-						type: 'FETCH_COUNTRIES',
+						type: 'LOADED_COUNTRIES',
 						payload: data
 					}
 				}
-				
-				dispatch(fetchCountries(data.data))
+				dispatch( loaded( data.data ) )
+				dispatch( show( data.data ) )
 			})
 			.catch(( error ) => {
-				const errorFetvhCountries = (error) => {
+				const errorLoadedCountries = ( error ) => {
 					return {
-						type: 'ERROR_FETCH_COUNTRIES',
-						error
+						type: 'ERROR_LOADED_COUNTRIES',
+						error: error,
 					}
 				}
 
-				dispatch(errorFetvhCountries(error))
+				dispatch( errorLoadedCountries( error ) )
 			})
 	}
 };
 
-export const show = (arrCountries) => {
-	const showCountries = (data) => {
+export const show = ( arrCountries ) => {
+
+	const loadedCitiesFromCountries = ( data ) => {
+		let cities = [];
+		data.map((item) => {
+			for (var i = 0; i < item.cities.length; i++) {
+				cities.push({ id: item.id, city: item.cities[i] })
+			}
+		})
+		return cities;
+	}
+	const arrCities = loadedCitiesFromCountries(arrCountries);
+		
+	const show = ( data ) => {
 		return {
 			type: 'SHOW_COUNTRIES',
 			payload: data
 		}
 	}
 
-	return (dispatch) => {
-		dispatch(showCountries(arrCountries))
+	return ( dispatch ) => {
+		dispatch( show( arrCountries ) )
+		dispatch( loadCities( arrCities ) )
 	}
 }
 

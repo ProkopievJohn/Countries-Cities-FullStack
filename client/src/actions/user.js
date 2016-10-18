@@ -21,7 +21,7 @@ export const login = ( send ) => {
 					}
                 };
 
-				dispatch(data.data.success ? loginSuccess( data ) : loginNotSuccess( data ));
+				dispatch(data.data.success ? loginSuccess( data.data ) : loginNotSuccess( data.data ));
 			})
 			.catch(( error ) => {
                 const errorLogin = ( error ) => {
@@ -76,11 +76,14 @@ export const signup = ( send ) => {
 	}
 }
 
-export const logout = ( user ) => {
+export const logout = () => {
 	return (dispatch) => {
-        const logout = {
-            type: 'LOGOUT'
+        const logout = () => {
+			return {
+				type: 'LOGOUT'
+			}
         };
-		dispatch( logout );
+
+		dispatch( logout() );
 	}
 }
