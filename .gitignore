@@ -1,6 +1,8 @@
 /server/node_modules
 /server/npm-debug.log
 /npm-debug.log
-/client/node_modules
-/client/public/libs
 .vscode/
+client-react/node_modules
+client-react/public/libs
+client-angular/node_modules
+client-angular/public/libs

@@ -23,10 +23,10 @@ router.route('/').get(function (req, res) {
 /*===================== sign up =================*/
 require('./routes.signup')( router, secret, time );
 
-/*=================== log in =====================*/
+/*=================== log in ====================*/
 require('./routes.login')( router, secret, time );
 
-/*========= change countries - cities data ===========*/
+/*======= change countries - cities data ========*/
 require('./routes.countries')( router, db );
 
 module.exports = router;
