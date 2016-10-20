@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import * as countries from './countries';
 import * as cities from './cities';
 import * as user from './user';
