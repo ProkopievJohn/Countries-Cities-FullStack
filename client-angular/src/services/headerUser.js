@@ -1,4 +1,4 @@
-class Countries {
+class HeaderUserService {
 	constructor( $http ) {
 		this.$http = $http;
 	}
@@ -8,6 +8,6 @@ class Countries {
 	}
 }
 
-Countries.$inject = [ '$http' ];
+HeaderUserService.$inject = [ '$http' ];
 
-export default Countries;
+export default HeaderUserService;

@@ -1,8 +1,8 @@
-const countriesDirective = () => {
+const countries = () => {
 	return {
 		templateUrl: '../views/counties.tmp.html',
 		controller: 'countriesCtrl'
 	}
 }
 
-export default countriesDirective;
+export default countries;

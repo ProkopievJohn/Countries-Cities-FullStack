@@ -1,5 +1,16 @@
+<form class="form-group col-sm-12" name="country" novalidate>
+	<label for="countries-input">Countries</label>
+	<div class="input-group">
+		<input id="countries-input" class="form-control" type="text" placeholder="select countries" ng-model="search.id" required />
+		<div class="input-group-btn">
+			<button id="countries-btn" class="btn btn-default" type="button" ng-disabled="country.$invalid" ng-click="newCountry( search.id )" >
+				Add country
+			</button>
+		</div>
+	</div>
+</form>
 <ul id="countries-list" class="col-sm-12 list" >
-    <li ng-repeat="country in countries">
+    <li ng-repeat="country in countries | searchCountries:search" ng-class="{ selected: isSelectCountry( country ) }" ng-click="selectCountry( country )" >
         {{ country.id }}
     </li>
 </ul>

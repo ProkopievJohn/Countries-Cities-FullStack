@@ -4,7 +4,6 @@ const config = ( $stateProvider, $urlRouterProvider ) => {
         .state( 'index', {
             url: '/',
             templateUrl: '../views/section.tmp.html',
-            controller: 'initCtrl',
         })
 }
 

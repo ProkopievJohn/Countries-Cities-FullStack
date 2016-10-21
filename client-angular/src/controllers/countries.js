@@ -1,12 +1,29 @@
-class CountriesCtrl {
-	constructor( $scope, $http ) {
-                $http.get('http://localhost:3000/countries').then(( data ) => {
-                        $scope.countries = data.data;
-                })
-                $scope.countries = [{id: 'no countries'}]
+class Countries {
+	constructor( $scope, countriesService ) {
+		$scope.countries = [{id: 'no countries', cities: ['no cities'] }];
+		$scope.data = { id: '', city: '' };
+		$scope.search = { id: '', city: '' };
+		countriesService.getCountries().then(( data ) => {
+			$scope.countries = data.data;
+		})
+		$scope.selectCountry = ( country ) => {
+			if ($scope.search.id === country.id) {
+				$scope.search.id = '';
+			} else {
+				$scope.search.id = country.id;
+				$scope.data.id = country.id;
+			}
+		}
+		$scope.isSelectCountry = ( country ) => {
+			return $scope.search.id === country.id;
+		}
+		$scope.newCountry = ( countryName ) => {
+			const name = countryName[0].toUpperCase() + countryName.slice(1);
+			$scope.data.id = name;
+		}
 	}
 }
 
-CountriesCtrl.$inject = [ '$scope', '$http' ];
+Countries.$inject = [ '$scope', 'countriesService' ];
 
-export default CountriesCtrl;
+export default Countries;

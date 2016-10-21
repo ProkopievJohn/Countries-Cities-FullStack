@@ -1,5 +1,9 @@
-import countriesService from './countries';
+import Countries from './countries';
+import HeaderResponse from './headerResponse';
+import HeaderUser from './headerUser'
 
 export {
-    countriesService,
+    Countries,
+    HeaderResponse,
+    HeaderUser,
 }
