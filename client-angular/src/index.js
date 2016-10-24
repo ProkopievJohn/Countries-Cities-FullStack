@@ -11,7 +11,7 @@ angular.module('app', [uiRouter])
 
 		.directive( 'countriesDirective', directives.countries )
 		.directive( 'citiesDirective', directives.cities )
-		.directive( 'userHeaderDirective', directives.headerUser )
+		.directive( 'headerUserDirective', directives.headerUser )
 		.directive( 'headerResponseDirective', directives.headerResponse )
 		
 		.controller( 'citiesCtrl', controllers.Cities )
@@ -22,6 +22,7 @@ angular.module('app', [uiRouter])
 		.service( 'countriesService', services.Countries )
 		.service( 'headerResponseService', services.HeaderResponse )
 		.service( 'headerUserService', services.HeaderUser )
+		.service( 'sessionService', services.Session )
 		
 		.filter( 'searchCountries', filters.countries )
 		.filter( 'searchCities', filters.cities )

@@ -10,7 +10,11 @@ module.exports = function ( router, db ) {
 
 			db.get(id, function (data) {
 				if (data) {res.send('please update'); return;}
-				if (typeof req.body.cities === 'string') {req.body.cities = [req.body.cities]}
+				if ( typeof req.body.cities === 'string' && req.body.cities.trim().length > 0 ) {
+					req.body.cities = [req.body.cities]
+				} else {
+					delete req.body.cities;
+				}
 				db.add(req.body, function (data) {
 					res.send(data)
 				});
@@ -23,6 +27,7 @@ module.exports = function ( router, db ) {
 				});
 			} else {
 				var id = { id: req.body.id };
+			console.log(req.body)
 				
 				db.update(id, [req.body.cities], function (data) {
 					res.send(data)

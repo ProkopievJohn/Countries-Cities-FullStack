@@ -1,8 +1,8 @@
 class Countries {
 	constructor( $scope, countriesService ) {
 		$scope.countries = [{id: 'no countries', cities: ['no cities'] }];
-		$scope.data = { id: '', city: '' };
-		$scope.search = { id: '', city: '' };
+		$scope.data = { id: '', cities: '' };
+		$scope.search = { id: '', cities: '' };
 		countriesService.getCountries().then(( data ) => {
 			$scope.countries = data.data;
 		})

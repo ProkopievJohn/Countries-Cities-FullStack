@@ -3,8 +3,12 @@ class HeaderUserService {
 		this.$http = $http;
 	}
 
-	getCountries() {
-		return this.$http.get('http://localhost:3000/countries');
+	login( user ) {
+		return this.$http.post( 'http://localhost:3000/login', user );
+	}
+
+	signup( user ) {
+		return this.$http.post( 'http://localhost:3000/signup', user );
 	}
 }
 

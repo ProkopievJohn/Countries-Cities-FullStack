@@ -3,7 +3,7 @@ var express = require('express'),
 	User = require('../db/User.model'),
 	jwt = require('jsonwebtoken'),
 	secret = 'secretword',
-	time = 300;
+	time = 86000;
 
 var router = express.Router();
 

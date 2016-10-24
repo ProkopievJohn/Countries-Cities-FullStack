@@ -6,25 +6,25 @@ class Cities {
 			let cities = [];
 			countries.forEach( ( item ) => {
 				for ( let i = 0; i < item.cities.length; i++ ) {
-					cities.push( { id: item.id, city: item.cities[i] } );
+					cities.push( { id: item.id, cities: item.cities[i] } );
 				}
 			})
 			$scope.cities = cities;
 		})
 		$scope.selectCity = ( city ) => {
-			if ( $scope.search.city === city.city ) {
-				$scope.search.city = '';
+			if ( $scope.search.cities === city.cities ) {
+				$scope.search.cities = '';
 			} else {
-				$scope.search.city = city.city;
-				$scope.data.city = city.city;
+				$scope.search.cities = city.cities;
+				$scope.data.cities = city.cities;
 			}
 		}
 		$scope.isSelectCity = ( city ) => {
-			return $scope.search.city === city.city;
+			return $scope.search.cities === city.cities;
 		}
 		$scope.newCity = ( cityName ) => {
 			const name = cityName[0].toUpperCase() + cityName.slice(1);
-			$scope.data.city = name;
+			$scope.data.cities = name;
 		}
 	}
 }

@@ -1,9 +1,9 @@
 <form class="form-group col-sm-12" name="city" novalidate>
 	<label for="cities-input">Cities</label>
 	<div class="input-group">
-		<input id="cities-input" class="form-control" type="text" placeholder="select cities" ng-model="search.city" required />
+		<input id="cities-input" class="form-control" type="text" placeholder="select cities" ng-model="search.cities" required />
 		<div class="input-group-btn">
-			<button id="cities-btn" class="btn btn-default" type="button" ng-disabled="city.$invalid" ng-click="newCity( search.city )" >
+			<button id="cities-btn" class="btn btn-default" type="button" ng-disabled="city.$invalid" ng-click="newCity( search.cities )" >
 				Add city
 			</button>
 		</div>
@@ -11,6 +11,6 @@
 </form>
 <ul id="cities-list" class="col-sm-12 list" >
 	<li ng-repeat="city in cities | searchCities:search" ng-class="{ selected: isSelectCity( city ) }" ng-click="selectCity( city )">
-		{{ city.city }}
+		{{ city.cities }}
 	</li>
 </ul>

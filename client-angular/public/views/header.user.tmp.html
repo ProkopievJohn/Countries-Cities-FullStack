@@ -1,29 +1,28 @@
-<div id="login-signup" class="col-sm-4" ng-transclude >
+<div id="login-signup" class="col-sm-4" >
 	<!--<div class="user " + ( user.success ? ' ' : ' hide ' ) }>-->
-	<div class="user hide">
-		<button id="logout" class="btn btn-default" type="button" >
+	<div class="user" ng-class="{ hide: !isSuccess() }">
+		<button id="logout" class="btn btn-default" type="button" ng-click="logout()" >
 			logout <span class="glyphicon glyphicon-log-out"></span>
 		</button>
-		<!--<div class="user-name">Hello <span class="badge">{{ user }}</span></div>-->
-		<div class="user-name">Hello <span class="badge">user</span></div>
+		<div class="user-name">Hello <span class="badge"> {{ user.user.name }} </span></div>
 	</div>
 	<!--<div class="row " + ( user.success ? ' hide ' : '' ) }>-->
-	<div class="row">
-		<div class="login-group col-sm-12">
+	<div class="row" ng-class="{ hide: isSuccess() }">
+		<form class="login-group col-sm-12" name="user" novalidate >
 			<div class="p-0 form-group col-sm-4">
-				<input id="name" class="form-control" type="text" placeholder="name" />
+				<input id="name" class="form-control" type="text" placeholder="name" ng-model="logUser.name" required />
 			</div>
 			<div class="p-0 form-group col-sm-4">
-				<input type="password" class="form-control" id="password" placeholder="Password" />
+				<input type="password" class="form-control" id="password" placeholder="Password" ng-model="logUser.password" required />
 			</div>
 			<div class="input-group-btn col-sm-4 p-0">
-				<button id="login" class="btn btn-default" type="button" >
+				<button id="login" class="btn btn-default" type="button" ng-disabled="user.$invalid" ng-click="login( logUser )" >
 					Log In
 				</button>
-				<button id="signup" class="btn btn-default" type="button" >
+				<button id="signup" class="btn btn-default" type="button" ng-disabled="user.$invalid" ng-click="signup( logUser )" >
 					Sign Up
 				</button>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>
