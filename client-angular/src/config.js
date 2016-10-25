@@ -1,12 +1,14 @@
-const config = ( $stateProvider, $urlRouterProvider ) => {
+import template from './section.tmp.html';
+
+const config = ( $stateProvider, $urlRouterProvider, $httpProvider ) => {
     $urlRouterProvider.otherwise('/');
     $stateProvider
         .state( 'index', {
             url: '/',
-            templateUrl: '../views/section.tmp.html',
+            template,
         })
 }
 
-config.$inject = [ '$stateProvider', '$urlRouterProvider' ];
+config.$inject = [ '$stateProvider', '$urlRouterProvider', '$httpProvider' ];
 
 export default config;

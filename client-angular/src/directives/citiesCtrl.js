@@ -4,9 +4,9 @@ class Cities {
 		$scope.$watch('countries', ( newVal, oldVal ) => {
 			const countries = $scope.countries;
 			let cities = [];
-			countries.forEach( ( item ) => {
+			countries.filter( ( item ) => {
 				for ( let i = 0; i < item.cities.length; i++ ) {
-					cities.push( { id: item.id, cities: item.cities[i] } );
+					cities.push({ id: item.id, cities: item.cities[i] });
 				}
 			})
 			$scope.cities = cities;

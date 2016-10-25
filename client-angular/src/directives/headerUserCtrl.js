@@ -1,9 +1,10 @@
 class HeaderUser {
-	constructor( $scope, headerUserService, sessionService ) {
+	constructor( $scope, headerUserService, sessionService, $http ) {
 		$scope.isSuccess = () => {
 			const storUser = JSON.parse( sessionService.get( 'user' ) ); 
 			if ( storUser !== null ) {
 				$scope.user = storUser;
+				$http.defaults.headers.common.Authorization = 'Bearer ' + storUser.token;
 			}
 			return $scope.user === undefined ? false : $scope.user.success ? true : false;
 		}
@@ -12,6 +13,7 @@ class HeaderUser {
 			headerUserService.login( logUser ).then( ( data ) => {
 				if ( data.data.success ) {
 					sessionService.set( 'user', JSON.stringify( data.data ) );
+					$http.defaults.headers.common.Authorization = 'Bearer ' + data.data.token;
 				} else {
 					console.log( data.data );
 				}
@@ -22,6 +24,7 @@ class HeaderUser {
 			headerUserService.signup( logUser ).then( ( data ) => {
 				if ( data.data.success ) {
 					sessionService.set( 'user', JSON.stringify( data.data ) );
+					$http.defaults.headers.common.Authorization = 'Bearer ' + data.data.token;
 				} else {
 					console.log( data.data );
 				}
@@ -31,10 +34,11 @@ class HeaderUser {
 		$scope.logout = () => {
 			$scope.user = undefined;
 			sessionService.remove( 'user' );
+			$http.defaults.headers.common.Authorization = '';
 		}
 	}
 }
 
-HeaderUser.$inject = [ '$scope', 'headerUserService', 'sessionService' ];
+HeaderUser.$inject = [ '$scope', 'headerUserService', 'sessionService', '$http' ];
 
 export default HeaderUser;

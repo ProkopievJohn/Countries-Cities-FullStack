@@ -1,11 +1,11 @@
-import countries from './countries';
-import cities from './cities';
-import headerResponse from './headerResponse';
-import headerUser from './headerUser';
+import countries from './countriesDirective';
+import cities from './citiesDirective';
+import headerResponse from './headerResponseDirective';
+import headerUser from './headerUserDirective';
 
 export {
-    countries,
-    cities,
-    headerResponse,
-    headerUser,
+	countries,
+	cities,
+	headerResponse,
+	headerUser,
 }

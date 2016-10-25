@@ -47,7 +47,7 @@ class HeaderResponse {
 			const user = JSON.parse( sessionService.get( 'user' ) );
 			const req = data.cities.trim().length === 0 ? { id: data.id } : data;
 			if ( user === undefined ) return;
-			headerResponseService.addNew( req, user.token ).then( ( data ) => {
+			headerResponseService.addNew( req ).then( ( data ) => {
 				if ( typeof data.data === 'object' ) {
 					$scope.countries = data.data;
 					$scope.search = { id: '', cities: '' };
@@ -61,7 +61,7 @@ class HeaderResponse {
 		$scope.updata = ( data ) => {
 			const user = JSON.parse( sessionService.get( 'user' ) );
 			if ( user === undefined ) return;
-			headerResponseService.updata( data, user.token ).then( ( data ) => {
+			headerResponseService.updata( data ).then( ( data ) => {
 				if ( typeof data.data === 'object' ) {
 					$scope.countries = data.data;
 					$scope.search = { id: '', cities: '' };
@@ -75,7 +75,7 @@ class HeaderResponse {
 		$scope.remove = ( data ) => {
 			const user = JSON.parse( sessionService.get( 'user' ) );
 			if ( user === undefined ) return;
-			headerResponseService.remove( data, user.token ).then( ( data ) => {
+			headerResponseService.remove( data ).then( ( data ) => {
 				if ( typeof data.data === 'object' ) {
 					$scope.countries = data.data;
 					$scope.search = { id: '', cities: '' };

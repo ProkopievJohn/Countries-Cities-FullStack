@@ -1,19 +1,36 @@
-var User = require('../db/User.model'),
-	jwt = require('jsonwebtoken');
+// import User from '../db/User.model';
+// import express from 'express';
+// import db from '../db';
+// import jwt from 'jsonwebtoken';
 
-module.exports = function ( router, secret, time ) {
-	router.route('/login')
-		.post(function (req, res) {
-			if (!req.body.name || !req.body.password) res.json({ success: false, message: 'error nead name and/or password' });
-			
-			var id = { name: req.body.name };
 
-			User.findOne(id, function (err, data) {
-				if (!data) {res.json({ success: false, message: 'Authentication failed. User not found.' }); return;}
-				if (data.password !== req.body.password ) {res.json({ success: false, message: 'Authentication failed. Wrong password.' }); return;}
-				var token = jwt.sign(id, secret, { algorithm: 'HS256', expiresIn: time });
-				res.json({ success: true, user: data, token: token });
-			});
-		}
-	);
-};
+// const router = express.Router();
+// const secret = 'SecretWord';
+// const time = 86000;
+
+
+
+// router.route( '/login' )
+// 	.post( ( req, res ) => {
+// 		if ( !req.body.name || !req.body.password ) {
+// 			res.json({
+// 				success: false,
+// 				message: 'Authentication failed. Need name and/or password.'
+// 			})
+// 		}
+
+// 		const id = { name: req.body.name };
+
+// 		User.findOne( id, ( err, data ) => {
+// 			if ( !data || data.password !== req.body.password ) {
+// 				res.json({
+// 					success: false,
+// 					message: 'Authentication failed. Need name and/or password.'
+// 				})
+// 			}
+
+// 			res.json({ success: true, user: data, token: jwt.sign( id, secret ) })
+// 		})
+// 	})
+
+// export default router;

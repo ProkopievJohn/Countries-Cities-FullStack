@@ -1,12 +1,13 @@
 const countries = () => { 
 	return ( arrCountries, search ) => {
+		const textCountry = search.id || '';
+
 		if ( !search.id ) return arrCountries;
-		let result = [];
-		arrCountries.forEach( ( item ) => {
-			if ( item.id.toLowerCase().indexOf( search.id.toLowerCase() ) !== -1 ) result.push(item);
+		return arrCountries.filter( ( item ) => {
+			return item.id.toLowerCase().indexOf( textCountry.toLowerCase() ) !== -1
 		})
-		return result;
 	}
 }
 
 export default countries;
+

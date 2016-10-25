@@ -3,22 +3,23 @@ class HeaderResponse {
 		this.$http = $http;
 	}
 
-	addNew( data, token ) {
-		return this.$http.post( 'http://localhost:3000/countries', data, { headers: { 'Authorization': token } } );
+	addNew( data ) {
+		return this.$http.post( 'http://localhost:3000/countries', data );
 	}
 
-	updata( data, token ) {
-		return this.$http.put( 'http://localhost:3000/countries', data, { headers: { 'Authorization': token } } );
+	updata( data ) {
+		return this.$http.put( 'http://localhost:3000/countries', data );
 	}
 
-	remove( data, token ) {
+	remove( data ) {
 		return this.$http({
 			method: 'delete',
 			url: 'http://localhost:3000/countries',
 			data: data,
-			headers: { 'Content-Type': 'application/json', 'Authorization': token }
+			headers: { 'Content-Type': 'application/json' }
 		});
 	}
+
 }
 
 HeaderResponse.$inject = [ '$http' ];

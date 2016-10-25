@@ -11,7 +11,8 @@ gulp.task('bundleAngular', function () {
 			debug: true
 		})
 		.transform(babelify, {
-			presets: ['es2015']
+			plugins: [ 'transform-html-import-to-string' ],
+			presets: [ 'es2015' ]
 		})
 		.bundle()
 		.on('error', function(err){
