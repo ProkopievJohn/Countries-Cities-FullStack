@@ -34,14 +34,14 @@ app.use( expressJwt({
 		return (
 			req.path === '/' 
 			|| req.path === '/default'
-			|| req.path === '/signup' 
-			|| req.path === '/login' 
+			|| req.path === '/signup'
+			|| req.path === '/login'
 			|| req.path === '/countries' && req.method === 'GET'
 		);
 	})
 )
 
-app.use('/', routers );
+routers( app );
 
 // error handlers
 
