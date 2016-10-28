@@ -1,21 +1,21 @@
 // #!/usr/bin/env node
 
-// /**
-//  * Module dependencies.
-//  */
-
 import app from '../app';
 import http from 'http';
 
 const port = process.env.PORT || 3000;
 
-http.createServer( app ).listen( port, ( err ) => {
-	console.log( 'listen port: ' + port );
-})
+import models from '../models';
+models.sequelize.sync({ force: true }).then( () => {
+	http.createServer( app ).listen( port, ( err ) => {
+		console.log( 'listen port: ' + port );
+	});
+}, ( err ) => {
+	console.log( 'Error with db', err );
+});
 
-// var app = require('../app');
-// var debug = require('debug')('test-express:server');
-// var http = require('http');
+
+
 
 // /**
 //  * Get port from environment and store in Express.

@@ -32,7 +32,7 @@ app.use( expressJwt({
 		secret
 	}).unless( ( req ) => {
 		return (
-			req.path === '/' 
+			req.path === '/'
 			|| req.path === '/default'
 			|| req.path === '/signup'
 			|| req.path === '/login'
@@ -42,6 +42,8 @@ app.use( expressJwt({
 )
 
 routers( app );
+
+
 
 // error handlers
 

@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS mytestdata;
+CREATE DATABASE IF NOT EXISTS countries_cities_database;
 
 CREATE TABLE countries (
 	country_id NUMERIC( 3 ) PRIMARY KEY,
