@@ -1,20 +1,16 @@
 // #!/usr/bin/env node
 
+
 import app from '../app';
 import http from 'http';
 
+
 const port = process.env.PORT || 3000;
 
-import models from '../models';
-models.sequelize.sync({ force: true }).then( () => {
-	http.createServer( app ).listen( port, ( err ) => {
-		console.log( 'listen port: ' + port );
-	});
-}, ( err ) => {
-	console.log( 'Error with db', err );
+
+http.createServer( app ).listen( port, ( err ) => {
+	console.log( 'listen port: ' + port );
 });
-
-
 
 
 // /**

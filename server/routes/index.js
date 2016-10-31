@@ -4,7 +4,8 @@ import { Router } from 'express';
 // import signup from './routes.signup';
 // import countries from './routes.countries';
 
-import models from '../models';
+import squel from 'squel';
+import mysql from 'mysql';
 
 const secret = 'SecretWord';
 const time = 86000;
@@ -26,50 +27,28 @@ export default ( app ) => {
 	// signup( router, secret, time );
 	// countries( router );
 
+const squelMysql = squel.useFlavour('mysql');
 
-	router.route('/add').post( ( req, res ) => {
-			models.Continent.findOrCreate({ 
-				where: { continent: req.body.continent }
-			}).spread( ( continent ) => {
-				return models.Country.findOrCreate({
-					where: { country: req.body.country },
-					defaults: {
-						ContinentId: continent.id
-					}
-				});
-			}).spread( ( country ) => {
-				models.CallingCode.findOrCreate({
-					where: { calling_code: req.body.calling_code },
-					defaults: {
-						CountryId: country.id
-					}
-				});
-				return models.City.findOrCreate({
-					where: { city: req.body.city },
-					defaults: {
-						population: req.body.population,
-						CountryId: country.id
-					}
-				});
-			}).spread( ( city ) => {
-				res.send( city );
-			})
-		});
-	
-	router.route( '/get/city' ).get( ( req, res ) => {
-			models.City.findAll({ include: [ models.Country ] }).then( ( data ) => {
-				res.send( data );
-			});
-		});
-	
-	router.route( '/get/country/sum/:id' ).get( ( req, res ) => {
-			models.Country.findOne({ where: { country: req.params.id } }).then( ( country ) => {
-				return models.City.sum( 'population', { where: { CountryId: country.id } });
-			}).then( ( sum ) => {
-					res.send({sum});
-				})
-		});
+	router.route( '/default' ).get( ( req, res ) => {
+		squel.delete().from('continents').toString();
+		squel.delete().from('countries').toString();
+		squel.delete().from('cities').toString();
+		squel.delete().from('calling_codes').toString();
+		squel.insert().into('continents').setFieldsRows([
+			{ id: 201, continent: 'North America' },
+			{ id: 202, continent: 'Europe' }
+			]).toString();
+		squel.insert().into('countries').setFieldsRows([
+			{ id: 101, country: 'Canada', continent: 201 },
+			{ id: 102, country: 'Europe' }
+			]).toString();
+	})
+
+
+
+
 
 
 	app.use( '/', router );
 }
+
