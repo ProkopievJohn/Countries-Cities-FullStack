@@ -28,18 +28,18 @@ app.use( express.static( path.join( __dirname, '../client-angular', 'public' ) )
 // app.use( express.static( path.join( __dirname, '../client-react', 'public' ) ) );
 
 /*================================= token check ================================*/
-app.use( expressJwt({
-		secret
-	}).unless( ( req ) => {
-		return (
-			req.path === '/'
-			|| req.path === '/default'
-			|| req.path === '/signup'
-			|| req.path === '/login'
-			|| req.path === '/countries' && req.method === 'GET'
-		);
-	})
-)
+// app.use( expressJwt({
+// 		secret
+// 	}).unless( ( req ) => {
+// 		return (
+// 			req.path === '/'
+// 			|| req.path === '/default'
+// 			|| req.path === '/signup'
+// 			|| req.path === '/login'
+// 			|| req.path === '/countries' && req.method === 'GET'
+// 		);
+// 	})
+// )
 
 routers( app );
 

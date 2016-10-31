@@ -51,3 +51,5 @@ SELECT countries.country, countries_data.city, tell_code.tell_code
 	WHERE countries.country_id=countries_data.country
 		AND countries.country_id=101
 		AND countries.country_id=tell_code.country_id;
+
+-- 57f225b390b33571ba93ddca7146f33fbc774321

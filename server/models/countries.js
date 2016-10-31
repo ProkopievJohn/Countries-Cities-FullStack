@@ -1,6 +1,6 @@
 export default ( sequelize, DataTypes ) => {
     const Country = sequelize.define("Country", {
-        country_id: {
+        id: {
             type: DataTypes.INTEGER( 3 ).UNSIGNED,
             primaryKey: true,
             autoIncrement: true,
@@ -9,11 +9,17 @@ export default ( sequelize, DataTypes ) => {
         country: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        continent: {
-            type: DataTypes.INTEGER( 3 ).UNSIGNED
+        }
+    }, {
+        classMethods: {
+            associate( models ) {
+                Country.belongsTo( models.Continent );
+                // Country.hasMany( models.City );
+                // Country.hasMany( models.CallingCode );
+            }
         }
     });
 
     return Country;
 };
+
