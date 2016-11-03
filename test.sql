@@ -52,4 +52,6 @@ SELECT countries.country, countries_data.city, tell_code.tell_code
 		AND countries.country_id=101
 		AND countries.country_id=tell_code.country_id;
 
--- 4babe0517884c14c72ebb063202a5f8187958a0e
+-- GITHUB TOKEN: 40fe4489793412e4adb55e0b8d280c6c9059e170 
+-- GITHUB GIST: 2bbdfbe01fa161920afaffc204041346 
+-- GITHUB GIST TYPE: Secret 
